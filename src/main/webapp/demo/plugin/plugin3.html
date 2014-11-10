@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>组件</title>
+    <link href="../../css/codemirror.css" rel="stylesheet">
+    <link href="../../css/monokai.css" rel="stylesheet">
+    <link href="../../css/chart.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/esl.js"></script>
+    <script type="text/javascript" src="../../js/codemirror.js"></script>
+    <script type="text/javascript" src="../../js/javascript.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths:{
+                echarts:'../../js/echarts',
+                'echarts/chart/bar' : '../../js/echarts',
+                'echarts/chart/line': '../../js/echarts',
+                'echarts/chart/pie': '../../js/echarts',
+                'theme':'../../js/theme'
+            }
+        });
+    </script>
+</head>
+<body>
+<div id="chartNote_plugin_3" class="container-fluid chartNoteheader">
+    <div class="row-fluid">
+        <div class="page-header hheader" contenteditable="true">
+            <span class="htitle">数据区域控件<small>个性化布局,数据阴影,背景,拖拽手柄样式等</small></span>
+        </div>
+    </div>
+</div>
+<div id="char_main_plugin_3" class="container-fluid">
+    <div class="row-fluid">
+        <div id="sidebar-code_plugin_3" class="span4" style="display: none;">
+            <div class="well sidebar-nav" style="height: 520px;">
+                <div class="nav-header"><a href="#" style="float: right;"  class="icon-resize-full"  id ="icon-resize_plugin_3" ></a>option</div>
+                <textarea id="code_plugin_3" name="code">
+                    option = {
+                    tooltip : {
+                    trigger: 'axis'
+                    },
+                    toolbox: {
+                    show : true,
+                    feature : {
+                    mark : {show: true},
+                    dataZoom : {show: true},
+                    dataView : {show: true},
+                    magicType : {show: true, type: ['line', 'bar']},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                    }
+                    },
+                    dataZoom : {
+                    show : true,
+                    realtime : true,
+                    //orient: 'vertical',   // 'horizontal'
+                    //x: 0,
+                    y: 36,
+                    //width: 400,
+                    height: 20,
+                    //backgroundColor: 'rgba(221,160,221,0.5)',
+                    //dataBackgroundColor: 'rgba(138,43,226,0.5)',
+                    //fillerColor: 'rgba(38,143,26,0.6)',
+                    //handleColor: 'rgba(128,43,16,0.8)',
+                    //xAxisIndex:[],
+                    //yAxisIndex:[],
+                    start : 40,
+                    end : 60
+                    },
+                    xAxis : [
+                    {
+                    type : 'category',
+                    boundaryGap : false,
+                    data : function (){
+                    var list = [];
+                    var n = 0;
+                    while (n++ < 150) {
+                    list.push(n);
+                    }
+                    return list;
+                    }()
+                    }
+                    ],
+                    yAxis : [
+                    {
+                    type : 'value'
+                    }
+                    ],
+                    series : [
+                    {
+                    name:'dz',
+                    type:'line',
+                    data:function (){
+                    var list = [];
+                    for (var i = 1; i <= 150; i++) {
+                    list.push(Math.round(Math.random()* 30));
+                    }
+                    return list;
+                    }()
+                    }
+                    ],
+                    calculable:false
+                    };
+                </textarea>
+            </div>
+        </div>
+        <!--chart-->
+        <div class="span11" id="graphic_plugin_3">
+            <div id="chartArea_plugin_3" class="chartArea">
+            </div>
+            <div style="margin-top: 10px;">
+                <button id="refreshChart_plugin_3" class="btn btn-success btnInfo">刷新</button><button id="editCoder_plugin_3" class="btn btn-success btnInfo">代码编辑</button><span class="text-info themeSpan">切换主题</span><select id="theme-select_plugin_3" class="themeSelector"></select>
+                <span id="wrong-message" style="color:red"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../js/chartEditor10.js"></script>
+<script type="text/javascript">
+    $(function(){
+        //dom
+        var plugin_3_code=document.getElementById('code_plugin_3');
+        var plugin_3_chartArea=document.getElementById("chartArea_plugin_3");
+        var plugin_3_chartNote=document.getElementById('chartNote_plugin_3');
+        var plugin_3_domCode = document.getElementById('sidebar-code_plugin_3');
+        var plugin_3_domGraphic = document.getElementById('graphic_plugin_3');
+        var plugin_3_domMain = document.getElementById('chartArea_plugin_3');
+        var plugin_3_iconResize = document.getElementById('icon-resize_plugin_3');
+        var plugin_3_codeEditor=document.getElementById('editCoder_plugin_3');
+        var plugin_3_themSelect=document.getElementById('theme-select_plugin_3');
+        var plugin_3_refrechart=document.getElementById('refreshChart_plugin_3');
+        //options
+        var plugin_3_options={dom:{}};
+        plugin_3_options.dom.chartArea=plugin_3_chartArea;
+        plugin_3_options.dom.code=plugin_3_code;
+        plugin_3_options.dom.domCode=plugin_3_domCode;
+        plugin_3_options.dom.chartNote=plugin_3_chartNote;
+        plugin_3_options.dom.domGraphic=plugin_3_domGraphic;
+        plugin_3_options.dom.domMain=plugin_3_domMain;
+        plugin_3_options.dom.iconResize=plugin_3_iconResize;
+        plugin_3_options.dom.codeEditor=plugin_3_codeEditor;
+        plugin_3_options.dom.themeSelect=plugin_3_themSelect;
+        plugin_3_options.dom.refreshChart=plugin_3_refrechart;
+        $("body").chartEditor10(plugin_3_options);
+    });
+</script>
+</body>
+</html>

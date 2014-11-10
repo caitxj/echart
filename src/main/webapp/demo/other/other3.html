@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>其他</title>
+    <link href="../../css/codemirror.css" rel="stylesheet">
+    <link href="../../css/monokai.css" rel="stylesheet">
+    <link href="../../css/chart.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/esl.js"></script>
+    <script type="text/javascript" src="../../js/codemirror.js"></script>
+    <script type="text/javascript" src="../../js/javascript.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths:{
+                echarts:'../../js/echarts',
+                'echarts/chart/bar' : '../../js/echarts',
+                'echarts/chart/line': '../../js/echarts',
+                'echarts/chart/pie': '../../js/echarts',
+                'echarts/chart/map': '../../js/echarts-map',
+                'theme':'../../js/theme'
+            }
+        });
+    </script>
+</head>
+<body>
+<div id="chartNote_other_3" class="container-fluid chartNoteheader">
+    <div class="row-fluid">
+        <div class="page-header hheader" contenteditable="true">
+            <span class="htitle">动态数据<small>饼图,雷达图</small></span>
+        </div>
+    </div>
+</div>
+<div id="char_main_other_3" class="container-fluid">
+    <div class="row-fluid">
+        <div id="sidebar-code_other_3" class="span4" style="display: none;">
+            <div class="well sidebar-nav" style="height: 520px;">
+                <div class="nav-header"><a href="#" style="float: right;"  class="icon-resize-full"  id ="icon-resize_other_3" ></a>option</div>
+                <textarea id="code_other_3" name="code">
+                    option = {
+                    title : {
+                    text: '动态数据',
+                    subtext: '纯属虚构'
+                    },
+                    tooltip : {
+                    trigger: 'item'
+                    },
+                    legend: {
+                    data:['随机数据1','随机数据2','随机数据3','随机数据4','随机数据5']
+                    },
+                    toolbox: {
+                    show : true,
+                    feature : {
+                    mark : {show: true},
+                    dataView : {show: true, readOnly: false},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                    }
+                    },
+                    polar : [
+                    {
+                    indicator : [
+                    { text : '指标一' },
+                    { text : '指标二' },
+                    { text : '指标三' },
+                    { text : '指标四' },
+                    { text : '指标五' }
+                    ],
+                    center : [document.getElementById('char_main_other_3').offsetWidth - 250, 225],
+                    radius : 100
+                    }
+                    ],
+                    calculable : false,
+                    series : [
+                    {
+                    name:'pie',
+                    type:'pie',
+                    radius : [0, 110],
+                    center: [250, 225],
+                    data: (function (){
+                    var res = [];
+                    var len = 0;
+                    while (len++ < 5) {
+                    res.push({
+                    name: '随机数据' + len,
+                    value: Math.round(Math.random()*10)
+                    });
+                    }
+                    return res;
+                    })()
+                    },
+                    {
+                    name: 'radar',
+                    type: 'radar',
+                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                    data: (function (){
+                    var res = [];
+                    var len = 0;
+                    while (len++ < 3) {
+                    res.push({
+                    name: 'data' + len,
+                    value: [
+                    Math.round(Math.random()*100),
+                    Math.round(Math.random()*100),
+                    Math.round(Math.random()*100),
+                    Math.round(Math.random()*100),
+                    Math.round(Math.random()*100)
+                    ]
+                    });
+                    }
+                    return res;
+                    })()
+                    }
+                    ]
+                    };
+                    var lastIndex = 5;
+                    var axisData;
+                    clearInterval(timeTicket);
+                    var timeTicket = setInterval(function (){
+                    lastIndex += 1;
+                    // 动态数据接口 addData
+                    myChart.addData([
+                    [
+                    0,        // 系列索引
+                    {         // 新增数据
+                    name: '随机数据' + lastIndex,
+                    value: Math.round(Math.random()*10)
+                    },
+                    false,     // 新增数据是否从队列头部插入
+                    false,     // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+                    '随机数据' + lastIndex
+                    ],
+                    [
+                    1,        // 系列索引
+                    {         // 新增数据
+                    name: 'data' + lastIndex,
+                    value: [
+                    Math.round(Math.random()*100),
+                    Math.round(Math.random()*100),
+                    Math.round(Math.random()*100),
+                    Math.round(Math.random()*100),
+                    Math.round(Math.random()*100)
+                    ]
+                    },
+                    false,     // 新增数据是否从队列头部插入
+                    false      // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+                    ]
+                    ]);
+                    }, 2000);
+                </textarea>
+            </div>
+        </div>
+        <!--chart-->
+        <div class="span11" id="graphic_other_3">
+            <div id="chartArea_other_3" class="chartArea">
+            </div>
+            <div style="margin-top: 10px;">
+                <button id="refreshChart_other_3" class="btn btn-success btnInfo">刷新</button><button id="editCoder_other_3" class="btn btn-success btnInfo">代码编辑</button><span class="text-info themeSpan">切换主题</span><select id="theme-select_other_3" class="themeSelector"></select>
+                <span id="wrong-message" style="color:red"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../js/chartEditor10.js"></script>
+<script type="text/javascript">
+    var curIndex = 0;
+    $(function(){
+        //dom
+        var other_3_code=document.getElementById('code_other_3');
+        var other_3_chartArea=document.getElementById("chartArea_other_3");
+        var other_3_chartNote=document.getElementById('chartNote_other_3');
+        var other_3_domCode = document.getElementById('sidebar-code_other_3');
+        var other_3_domGraphic = document.getElementById('graphic_other_3');
+        var other_3_domMain = document.getElementById('chartArea_other_3');
+        var other_3_iconResize = document.getElementById('icon-resize_other_3');
+        var other_3_codeEditor=document.getElementById('editCoder_other_3');
+        var other_3_themSelect=document.getElementById('theme-select_other_3');
+        var other_3_refrechart=document.getElementById('refreshChart_other_3');
+        //options
+        var other_3_options={dom:{}};
+        other_3_options.dom.chartArea=other_3_chartArea;
+        other_3_options.dom.code=other_3_code;
+        other_3_options.dom.domCode=other_3_domCode;
+        other_3_options.dom.chartNote=other_3_chartNote;
+        other_3_options.dom.domGraphic=other_3_domGraphic;
+        other_3_options.dom.domMain=other_3_domMain;
+        other_3_options.dom.iconResize=other_3_iconResize;
+        other_3_options.dom.codeEditor=other_3_codeEditor;
+        other_3_options.dom.themeSelect=other_3_themSelect;
+        other_3_options.dom.refreshChart=other_3_refrechart;
+        $("body").chartEditor10(other_3_options);
+    });
+</script>
+</body>
+</html>

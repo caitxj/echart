@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>组件</title>
+    <link href="../../css/codemirror.css" rel="stylesheet">
+    <link href="../../css/monokai.css" rel="stylesheet">
+    <link href="../../css/chart.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/esl.js"></script>
+    <script type="text/javascript" src="../../js/codemirror.js"></script>
+    <script type="text/javascript" src="../../js/javascript.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths:{
+                echarts:'../../js/echarts',
+                'echarts/chart/bar' : '../../js/echarts',
+                'echarts/chart/line': '../../js/echarts',
+                'echarts/chart/pie': '../../js/echarts',
+                'theme':'../../js/theme'
+            }
+        });
+    </script>
+</head>
+<body>
+<div id="chartNote_plugin_1" class="container-fluid chartNoteheader">
+    <div class="row-fluid">
+        <div class="page-header hheader" contenteditable="true">
+            <span class="htitle">坐标系<small>多级控制,个性化标签文字,间隔线样式等</small></span>
+        </div>
+    </div>
+</div>
+<div id="char_main_plugin_1" class="container-fluid">
+    <div class="row-fluid">
+        <div id="sidebar-code_plugin_1" class="span4" style="display: none;">
+            <div class="well sidebar-nav" style="height: 520px;">
+                <div class="nav-header"><a href="#" style="float: right;"  class="icon-resize-full"  id ="icon-resize_plugin_1" ></a>option</div>
+                <textarea id="code_plugin_1" name="code">
+                    option = {
+                    tooltip : {
+                    trigger: 'axis'
+                    },
+                    legend: {
+                    data:['蒸发量','降水量','最低气温','最高气温']
+                    },
+                    toolbox: {
+                    show : true,
+                    feature : {
+                    mark : {show: true},
+                    dataView : {show: true},
+                    magicType : {show: true, type: ['line', 'bar']},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                    }
+                    },
+                    xAxis : [
+                    {
+                    type : 'category',
+                    position: 'bottom',
+                    boundaryGap: true,
+                    axisLine : {    // 轴线
+                    show: true,
+                    lineStyle: {
+                    color: 'green',
+                    type: 'solid',
+                    width: 2
+                    }
+                    },
+                    axisTick : {    // 轴标记
+                    show:true,
+                    length: 10,
+                    lineStyle: {
+                    color: 'red',
+                    type: 'solid',
+                    width: 2
+                    }
+                    },
+                    axisLabel : {
+                    show:true,
+                    interval: 'auto',    // {number}
+                    rotate: 45,
+                    margin: 8,
+                    formatter: '{value}月',
+                    textStyle: {
+                    color: 'blue',
+                    fontFamily: 'sans-serif',
+                    fontSize: 15,
+                    fontStyle: 'italic',
+                    fontWeight: 'bold'
+                    }
+                    },
+                    splitLine : {
+                    show:true,
+                    lineStyle: {
+                    color: '#483d8b',
+                    type: 'dashed',
+                    width: 1
+                    }
+                    },
+                    splitArea : {
+                    show: true,
+                    areaStyle:{
+                    color:['rgba(144,238,144,0.3)','rgba(135,200,250,0.3)']
+                    }
+                    },
+                    data : [
+                    '1','2','3','4','5',
+                    {
+                    value:'6',
+                    textStyle: {
+                    color: 'red',
+                    fontSize: 30,
+                    fontStyle: 'normal',
+                    fontWeight: 'bold'
+                    }
+                    },
+                    '7','8','9','10','11','12'
+                    ]
+                    },
+                    {
+                    type : 'category',
+                    data : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+                    }
+                    ],
+                    yAxis : [
+                    {
+                    type : 'value',
+                    position: 'left',
+                    //min: 0,
+                    //max: 300,
+                    //precision: 1,
+                    //power: 10,
+                    splitNumber: 5,
+                    boundaryGap: [0,0.1],
+                    axisLine : {    // 轴线
+                    show: true,
+                    lineStyle: {
+                    color: 'red',
+                    type: 'dashed',
+                    width: 2
+                    }
+                    },
+                    axisTick : {    // 轴标记
+                    show:true,
+                    length: 10,
+                    lineStyle: {
+                    color: 'green',
+                    type: 'solid',
+                    width: 2
+                    }
+                    },
+                    axisLabel : {
+                    show:true,
+                    interval: 'auto',    // {number}
+                    rotate: -45,
+                    margin: 18,
+                    formatter: '{value} ml',    // Template formatter!
+                    textStyle: {
+                    color: '#1e90ff',
+                    fontFamily: 'verdana',
+                    fontSize: 10,
+                    fontStyle: 'normal',
+                    fontWeight: 'bold'
+                    }
+                    },
+                    splitLine : {
+                    show:true,
+                    lineStyle: {
+                    color: '#483d8b',
+                    type: 'dotted',
+                    width: 2
+                    }
+                    },
+                    splitArea : {
+                    show: true,
+                    areaStyle:{
+                    color:['rgba(205,92,92,0.3)','rgba(255,215,0,0.3)']
+                    }
+                    }
+                    },
+                    {
+                    type : 'value',
+                    precision: 1,
+                    splitNumber: 10,
+                    axisLabel : {
+                    formatter: function (value) {
+                    // Function formatter
+                    return value + ' °C'
+                    }
+                    },
+                    splitLine : {
+                    show: false
+                    }
+                    }
+                    ],
+                    series : [
+                    {
+                    name: '蒸发量',
+                    type: 'bar',
+                    data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
+                    },
+                    {
+                    name: '降水量',
+                    type: 'bar',
+                    data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+                    },
+                    {
+                    name:'最低气温',
+                    type: 'line',
+                    yAxisIndex: 1,
+                    data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
+                    },
+                    {
+                    name:'最高气温',
+                    type: 'line',
+                    xAxisIndex: 1,
+                    yAxisIndex: 1,
+                    data: [12.0, 12.2, 13.3, 14.5, 16.3, 18.2, 28.3, 33.4, 31.0, 24.5, 18.0, 16.2]
+                    }
+                    ]
+                    };
+                </textarea>
+            </div>
+        </div>
+        <!--chart-->
+        <div class="span11" id="graphic_plugin_1">
+            <div id="chartArea_plugin_1" class="chartArea">
+            </div>
+            <div style="margin-top: 10px;">
+                <button id="refreshChart_plugin_1" class="btn btn-success btnInfo">刷新</button><button id="editCoder_plugin_1" class="btn btn-success btnInfo">代码编辑</button><span class="text-info themeSpan">切换主题</span><select id="theme-select_plugin_1" class="themeSelector"></select>
+                <span id="wrong-message" style="color:red"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../js/chartEditor10.js"></script>
+<script type="text/javascript">
+    $(function(){
+        //dom
+        var plugin_1_code=document.getElementById('code_plugin_1');
+        var plugin_1_chartArea=document.getElementById("chartArea_plugin_1");
+        var plugin_1_chartNote=document.getElementById('chartNote_plugin_1');
+        var plugin_1_domCode = document.getElementById('sidebar-code_plugin_1');
+        var plugin_1_domGraphic = document.getElementById('graphic_plugin_1');
+        var plugin_1_domMain = document.getElementById('chartArea_plugin_1');
+        var plugin_1_iconResize = document.getElementById('icon-resize_plugin_1');
+        var plugin_1_codeEditor=document.getElementById('editCoder_plugin_1');
+        var plugin_1_themSelect=document.getElementById('theme-select_plugin_1');
+        var plugin_1_refrechart=document.getElementById('refreshChart_plugin_1');
+        //options
+        var plugin_1_options={dom:{}};
+        plugin_1_options.dom.chartArea=plugin_1_chartArea;
+        plugin_1_options.dom.code=plugin_1_code;
+        plugin_1_options.dom.domCode=plugin_1_domCode;
+        plugin_1_options.dom.chartNote=plugin_1_chartNote;
+        plugin_1_options.dom.domGraphic=plugin_1_domGraphic;
+        plugin_1_options.dom.domMain=plugin_1_domMain;
+        plugin_1_options.dom.iconResize=plugin_1_iconResize;
+        plugin_1_options.dom.codeEditor=plugin_1_codeEditor;
+        plugin_1_options.dom.themeSelect=plugin_1_themSelect;
+        plugin_1_options.dom.refreshChart=plugin_1_refrechart;
+        $("body").chartEditor10(plugin_1_options);
+    });
+</script>
+</body>
+</html>

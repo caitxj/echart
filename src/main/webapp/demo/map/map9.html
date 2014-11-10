@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>地图</title>
+    <link href="../../css/codemirror.css" rel="stylesheet">
+    <link href="../../css/monokai.css" rel="stylesheet">
+    <link href="../../css/chart.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/esl.js"></script>
+    <script type="text/javascript" src="../../js/codemirror.js"></script>
+    <script type="text/javascript" src="../../js/javascript.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths:{
+                echarts:'../../js/echarts',
+                'echarts/chart/bar' : '../../js/echarts',
+                'echarts/chart/line': '../../js/echarts',
+                'echarts/chart/pie': '../../js/echarts',
+                'echarts/chart/map': '../../js/echarts-map',
+                'theme':'../../js/theme'
+            }
+        });
+    </script>
+</head>
+<body>
+<div id="chartNote_map_9" class="container-fluid chartNoteheader">
+    <div class="row-fluid">
+        <div class="page-header hheader" contenteditable="true">
+            <span class="htitle">地图扩展<small>标准geoJson格式扩展地图类型-大洲</small></span>
+        </div>
+    </div>
+</div>
+<div id="char_main_map_9" class="container-fluid">
+    <div class="row-fluid">
+        <div id="sidebar-code_map_9" class="span4" style="display: none;">
+            <div class="well sidebar-nav" style="height: 520px;">
+                <div class="nav-header"><a href="#" style="float: right;"  class="icon-resize-full"  id ="icon-resize_map_9" ></a>option</div>
+                <textarea id="code_map_9" name="code">
+                    // 自定义扩展图表类型：mapType = continent 大洲地图
+                    require('echarts/util/mapData/params').params.continent = {
+                    getGeoJson: function (callback) {
+                    $.getJSON('continent_geo.json',callback);
+                    }
+                    }
+                    option = {
+                    title : {
+                    text : '金棕榈 智慧旅行@云数据',
+                    subtext: 'by 江江的喵',
+                    link: 'http://www.palmyou.com/',
+                    sublink: 'http://weibo.com/u/2813464944'
+                    },
+                    tooltip : {
+                    trigger: 'item',
+                    formatter: function (a){
+                    var sName = a[0];
+                    var pName = a[1];
+                    var value = a[2] + '万人次 （' + (a[2]/98.19).toFixed(2) + '%）';
+                    return sName + '<br/>' + pName + ' : ' + value;
+                    }
+                    },
+                    toolbox: {
+                    show : true,
+                    orient : 'vertical',
+                    x: 'right',
+                    y: 'center',
+                    feature : {
+                    mark : {show: true},
+                    dataView : {show: true, readOnly: false},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                    }
+                    },
+                    dataRange: {
+                    min: 0,
+                    max: 1000,
+                    text:['热', '冷'],
+                    splitNumber:0,
+                    color: ['orangered','yellow','lightskyblue']
+                    },
+                    series : [
+                    {
+                    name: '2013年出境目的地（洲际统计）',
+                    type: 'map',
+                    mapType: 'continent', // 自定义扩展图表类型
+                    itemStyle:{
+                    normal:{label:{show:true}},
+                    emphasis:{label:{show:true}}
+                    },
+                    data:[
+                    {name: '亚洲', value: 8967.69},
+                    {name: '大洋洲', value: 592.09},
+                    {name: '欧洲', value: 183.62},
+                    {name: '北美洲', value: 41.63},
+                    {name: '南美洲', value: 10.41},
+                    {name: '非洲', value: 22.5837}
+                    ],
+                    // 文本位置修正
+                    textFixed : {
+                    '大洋洲' : [265, 0],
+                    '非洲' : [10, -30],
+                    '北美洲' : [20, 0],
+                    '南美洲' : [0, -10],
+                    '亚洲' : [20, -30],
+                    '欧洲' : [200, -10],
+                    }
+                    }
+                    ]
+                    };
+                </textarea>
+            </div>
+        </div>
+        <!--chart-->
+        <div class="span11" id="graphic_map_9">
+            <div id="chartArea_map_9" class="chartArea">
+            </div>
+            <div style="margin-top: 10px;">
+                <button id="refreshChart_map_9" class="btn btn-success btnInfo">刷新</button><button id="editCoder_map_9" class="btn btn-success btnInfo">代码编辑</button><span class="text-info themeSpan">切换主题</span><select id="theme-select_map_9" class="themeSelector"></select>
+                <span id="wrong-message" style="color:red"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../js/chartEditor10.js"></script>
+<script type="text/javascript">
+    $(function() {
+        //dom
+        var map_9_code = document.getElementById('code_map_9');
+        var map_9_chartArea = document.getElementById("chartArea_map_9");
+        var map_9_chartNote = document.getElementById('chartNote_map_9');
+        var map_9_domCode = document.getElementById('sidebar-code_map_9');
+        var map_9_domGraphic = document.getElementById('graphic_map_9');
+        var map_9_domMain = document.getElementById('chartArea_map_9');
+        var map_9_iconResize = document.getElementById('icon-resize_map_9');
+        var map_9_codeEditor = document.getElementById('editCoder_map_9');
+        var map_9_themSelect = document.getElementById('theme-select_map_9');
+        var map_9_refrechart = document.getElementById('refreshChart_map_9');
+        //options
+        var map_9_options = {dom: {}};
+        map_9_options.dom.chartArea = map_9_chartArea;
+        map_9_options.dom.code = map_9_code;
+        map_9_options.dom.domCode = map_9_domCode;
+        map_9_options.dom.chartNote = map_9_chartNote;
+        map_9_options.dom.domGraphic = map_9_domGraphic;
+        map_9_options.dom.domMain = map_9_domMain;
+        map_9_options.dom.iconResize = map_9_iconResize;
+        map_9_options.dom.codeEditor = map_9_codeEditor;
+        map_9_options.dom.themeSelect = map_9_themSelect;
+        map_9_options.dom.refreshChart = map_9_refrechart;
+        $("body").chartEditor10(map_9_options);
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>雷达图</title>
+    <link href="../../css/codemirror.css" rel="stylesheet">
+    <link href="../../css/monokai.css" rel="stylesheet">
+    <link href="../../css/chart.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/esl.js"></script>
+    <script type="text/javascript" src="../../js/codemirror.js"></script>
+    <script type="text/javascript" src="../../js/javascript.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths:{
+                echarts:'../../js/echarts',
+                'echarts/chart/bar' : '../../js/echarts',
+                'echarts/chart/line': '../../js/echarts',
+                'echarts/chart/pie': '../../js/echarts',
+                'echarts/chart/radar': '../../js/echarts',
+                'theme':'../../js/theme'
+            }
+        });
+    </script>
+</head>
+<body>
+<div id="chartNote_radar_3" class="container-fluid chartNoteheader">
+    <div class="row-fluid">
+        <div class="page-header hheader" contenteditable="true">
+            <span class="htitle">多雷达图<small>多个极坐标</small></span>
+        </div>
+    </div>
+</div>
+<div id="char_main" class="container-fluid">
+    <div class="row-fluid">
+        <div id="sidebar-code_radar_3" class="span4" style="display: none;">
+            <div class="well sidebar-nav" style="height: 520px;">
+                <div class="nav-header"><a href="#"  style="float: right;"  class="icon-resize-full"  id ="icon-resize_radar_3" ></a>option</div>
+                <textarea id="code_radar_3" name="code">
+                    option = {
+                    title : {
+                    text: '多雷达图',
+                    subtext: '纯属虚构'
+                    },
+                    tooltip : {
+                    trigger: 'axis'
+                    },
+                    legend: {
+                    x : 'center',
+                    data:['某软件','某主食手机','某水果手机','降水量','蒸发量']
+                    },
+                    toolbox: {
+                    show : true,
+                    feature : {
+                    mark : {show: true},
+                    dataView : {show: true, readOnly: false},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                    }
+                    },
+                    calculable : true,
+                    polar : [
+                    {
+                    indicator : [
+                    {text : '品牌', max  : 100},
+                    {text : '内容', max  : 100},
+                    {text : '可用性', max  : 100},
+                    {text : '功能', max  : 100}
+                    ],
+                    center : ['25%',200],
+                    radius : 80
+                    },
+                    {
+                    indicator : [
+                    {text : '外观', max  : 100},
+                    {text : '拍照', max  : 100},
+                    {text : '系统', max  : 100},
+                    {text : '性能', max  : 100},
+                    {text : '屏幕', max  : 100}
+                    ],
+                    radius : 80
+                    },
+                    {
+                    indicator : (function (){
+                    var res = [];
+                    for (var i = 1; i <= 12; i++) {
+                    res.push({text:i+'月',max:100});
+                    }
+                    return res;
+                    })(),
+                    center : ['75%', 200],
+                    radius : 80
+                    }
+                    ],
+                    series : [
+                    {
+                    type: 'radar',
+                    tooltip : {
+                    trigger: 'item'
+                    },
+                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                    data : [
+                    {
+                    value : [60,73,85,40],
+                    name : '某软件'
+                    }
+                    ]
+                    },
+                    {
+                    type: 'radar',
+                    polarIndex : 1,
+                    data : [
+                    {
+                    value : [85, 90, 90, 95, 95],
+                    name : '某主食手机'
+                    },
+                    {
+                    value : [95, 80, 95, 90, 93],
+                    name : '某水果手机'
+                    }
+                    ]
+                    },
+                    {
+                    type: 'radar',
+                    polarIndex : 2,
+                    itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                    data : [
+                    {
+                    name : '降水量',
+                    value : [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 75.6, 82.2, 48.7, 18.8, 6.0, 2.3],
+                    },
+                    {
+                    name:'蒸发量',
+                    value:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 35.6, 62.2, 32.6, 20.0, 6.4, 3.3]
+                    }
+                    ]
+                    }
+                    ]
+                    };
+                </textarea>
+            </div>
+        </div>
+        <!--chart-->
+        <div class="span11" id="graphic_radar_3">
+            <div id="chartArea_radar_3" class="chartArea">
+            </div>
+            <div style="margin-top: 10px;">
+                <button id="refreshChart_radar_3" class="btn btn-success btnInfo">刷新</button><button id="editCoder_radar_3" class="btn btn-success btnInfo">代码编辑</button><span class="text-info themeSpan">切换主题</span><select id="theme-select_radar_3" class="themeSelector"></select>
+                <span id="wrong-message" style="color:red"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../js/chartEditor10.js"></script>
+<script type="text/javascript">
+    $(function(){
+        //dom
+        var radar_3_code=document.getElementById('code_radar_3');
+        var radar_3_chartArea=document.getElementById("chartArea_radar_3");
+        var radar_3_chartNote=document.getElementById('chartNote_radar_3');
+        var radar_3_domCode = document.getElementById('sidebar-code_radar_3');
+        var radar_3_domGraphic = document.getElementById('graphic_radar_3');
+        var radar_3_domMain = document.getElementById('chartArea_radar_3');
+        var radar_3_iconResize = document.getElementById('icon-resize_radar_3');
+        var radar_3_codeEditor=document.getElementById('editCoder_radar_3');
+        var radar_3_themSelect=document.getElementById('theme-select_radar_3');
+        var radar_3_refrechart=document.getElementById('refreshChart_radar_3');
+        //options
+        var radar_3_options={dom:{}};
+        radar_3_options.dom.chartArea=radar_3_chartArea;
+        radar_3_options.dom.code=radar_3_code;
+        radar_3_options.dom.domCode=radar_3_domCode;
+        radar_3_options.dom.chartNote=radar_3_chartNote;
+        radar_3_options.dom.domGraphic=radar_3_domGraphic;
+        radar_3_options.dom.domMain=radar_3_domMain;
+        radar_3_options.dom.iconResize=radar_3_iconResize;
+        radar_3_options.dom.codeEditor=radar_3_codeEditor;
+        radar_3_options.dom.themeSelect=radar_3_themSelect;
+        radar_3_options.dom.refreshChart=radar_3_refrechart;
+        $("body").chartEditor10(radar_3_options);
+    });
+</script>
+</body>
+</html>

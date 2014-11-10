@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>力导向分布图</title>
+    <link href="../../css/codemirror.css" rel="stylesheet">
+    <link href="../../css/monokai.css" rel="stylesheet">
+    <link href="../../css/chart.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/esl.js"></script>
+    <script type="text/javascript" src="../../js/codemirror.js"></script>
+    <script type="text/javascript" src="../../js/javascript.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths:{
+                echarts:'../../js/echarts',
+                'echarts/chart/bar' : '../../js/echarts',
+                'echarts/chart/line': '../../js/echarts',
+                'echarts/chart/pie': '../../js/echarts',
+                'echarts/chart/force': '../../js/echarts',
+                'theme':'../../js/theme'
+            }
+        });
+    </script>
+</head>
+<body>
+<div id="chartNote_force_4" class="container-fluid chartNoteheader">
+    <div class="row-fluid">
+        <div class="page-header hheader" contenteditable="true">
+            <span class="htitle">复杂关系网络<small>WebKit内核依赖</small></span>
+        </div>
+    </div>
+</div>
+<div id="char_main_force_4" class="container-fluid">
+    <div class="row-fluid">
+        <div id="sidebar-code_force_4" class="span4" style="display: none;">
+            <div class="well sidebar-nav" style="height: 520px;">
+                <div class="nav-header"><a href="#" style="float: right;"  class="icon-resize-full"  id ="icon-resize_force_4" ></a>option</div>
+                <textarea id="code_force_4" name="code">
+                    option = {
+                    title : {
+                    text: 'webkit内核依赖',
+                    subtext: '数据来自网络',
+                    x:'right',
+                    y:'bottom'
+                    },
+                    tooltip : {
+                    trigger: 'item',
+                    formatter : "{b}"
+                    },
+                    toolbox: {
+                    show : true,
+                    feature : {
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                    }
+                    },
+                    legend : {
+                    data : ['HTMLElement', 'WebGL', 'SVG', 'CSS', 'Other'],
+                    orient : 'vertical',
+                    x : 'left'
+                    },
+                    series : (function (){
+                    // If data have been loaded
+                    if (webkitDepData) {
+                    //webkitDepData has been required and defined in webkit-dep.js
+                    webkitDepData.minRadius = 5;
+                    webkitDepData.maxRadius = 8;
+                    webkitDepData.gravity = 1.1;
+                    webkitDepData.scaling = 1.1;
+                    webkitDepData.steps = 20;
+                    webkitDepData.large = true;
+                    webkitDepData.useWorker = true;
+                    webkitDepData.coolDown = 0.995;
+                    webkitDepData.itemStyle = {
+                    normal : {
+                    linkStyle : {
+                    opacity : 0.5
+                    }
+                    }
+                    }
+                    return [webkitDepData];
+                    } else {
+                    return [];
+                    }
+                    })()
+                    };
+                </textarea>
+            </div>
+        </div>
+        <!--chart-->
+        <div class="span11" id="graphic_force_4">
+            <div id="chartArea_force_4" class="chartArea">
+            </div>
+            <div style="margin-top: 10px;">
+                <button id="refreshChart_force_4" class="btn btn-success btnInfo">刷新</button><button id="editCoder_force_4" class="btn btn-success btnInfo">代码编辑</button><span class="text-info themeSpan">切换主题</span><select id="theme-select_force_4" class="themeSelector"></select>
+                <span id="wrong-message" style="color:red"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../js/chartEditor10.js"></script>
+<script type="text/javascript">
+    var webkitDepData;
+    $(function(){
+        //dom
+        var force_4_code=document.getElementById('code_force_4');
+        var force_4_chartArea=document.getElementById("chartArea_force_4");
+        var force_4_chartNote=document.getElementById('chartNote_force_4');
+        var force_4_domCode = document.getElementById('sidebar-code_force_4');
+        var force_4_domGraphic = document.getElementById('graphic_force_4');
+        var force_4_domMain = document.getElementById('chartArea_force_4');
+        var force_4_iconResize = document.getElementById('icon-resize_force_4');
+        var force_4_codeEditor=document.getElementById('editCoder_force_4');
+        var force_4_themSelect=document.getElementById('theme-select_force_4');
+        var force_4_refrechart=document.getElementById('refreshChart_force_4');
+        //options
+        var force_4_options={dom:{}};
+        force_4_options.dom.chartArea=force_4_chartArea;
+        force_4_options.dom.code=force_4_code;
+        force_4_options.dom.domCode=force_4_domCode;
+        force_4_options.dom.chartNote=force_4_chartNote;
+        force_4_options.dom.domGraphic=force_4_domGraphic;
+        force_4_options.dom.domMain=force_4_domMain;
+        force_4_options.dom.iconResize=force_4_iconResize;
+        force_4_options.dom.codeEditor=force_4_codeEditor;
+        force_4_options.dom.themeSelect=force_4_themSelect;
+        force_4_options.dom.refreshChart=force_4_refrechart;
+        $("body").chartEditor10(force_4_options);
+        require(['webkit-dep'], function (wd) {
+            webkitDepData = wd;
+            //webkitDepData has been required and defined in webkit-dep.js
+            webkitDepData.minRadius = 5;
+            webkitDepData.maxRadius = 8;
+            webkitDepData.density = 1.1;
+            webkitDepData.attractiveness = 1.1;
+            webkitDepData.itemStyle = {
+                normal : {
+                    linkStyle : {
+                        opacity : 0.5
+                    }
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

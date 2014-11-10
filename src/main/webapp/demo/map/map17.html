@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>地图</title>
+    <link href="../../css/codemirror.css" rel="stylesheet">
+    <link href="../../css/monokai.css" rel="stylesheet">
+    <link href="../../css/chart.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/esl.js"></script>
+    <script type="text/javascript" src="../../js/codemirror.js"></script>
+    <script type="text/javascript" src="../../js/javascript.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths:{
+                echarts:'../../js/echarts',
+                'echarts/chart/bar' : '../../js/echarts',
+                'echarts/chart/line': '../../js/echarts',
+                'echarts/chart/pie': '../../js/echarts',
+                'echarts/chart/map': '../../js/echarts-map',
+                'theme':'../../js/theme'
+            }
+        });
+    </script>
+</head>
+<body>
+<div id="chartNote_map_17" class="container-fluid chartNoteheader">
+    <div class="row-fluid">
+        <div class="page-header hheader" contenteditable="true">
+            <span class="htitle">地图扩展<small>SVG扩展-足球场</small></span>
+        </div>
+    </div>
+</div>
+<div id="char_main_map_17" class="container-fluid">
+    <div class="row-fluid">
+        <div id="sidebar-code_map_17" class="span4" style="display: none;">
+            <div class="well sidebar-nav" style="height: 520px;">
+                <div class="nav-header"><a href="#" style="float: right;"  class="icon-resize-full"  id ="icon-resize_map_17" ></a>option</div>
+                <textarea id="code_map_17" name="code">
+                    // 自定义扩展图表类型：mapType = body
+                    require('echarts/util/mapData/params').params.football = {
+                    getGeoJson: function (callback) {
+                    $.ajax({
+                    url: "svg/football.svg",
+                    dataType: 'xml',
+                    success: function(xml) {
+                    callback(xml)
+                    }
+                    });
+                    }
+                    }
+                    option = {
+                    backgroundColor:'#228b22',
+                    title : {
+                    text : '2014世界杯',
+                    subtext: '地图SVG扩展',
+                    textStyle: {
+                    color: '#fff'
+                    }
+                    },
+                    tooltip : {
+                    trigger: 'item'
+                    },
+                    toolbox: {
+                    show : true,
+                    feature : {
+                    mark : {show: true},
+                    dataView : {show: true, readOnly: false},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                    }
+                    },
+                    series : [
+                    {
+                    name: '2014世界杯',
+                    type: 'map',
+                    mapType: 'football', // 自定义扩展图表类型
+                    roam:true,
+                    itemStyle:{
+                    normal:{label:{show:true}},
+                    emphasis:{label:{show:true}}
+                    },
+                    data:[
+                    {name: '草地', hoverable: false, itemStyle:{normal:{label:{show:false}}}}
+                    ],
+                    textFixed : {
+                    '球门区1' : [0, -20],
+                    '球门区2' : [0, -20],
+                    '禁区1' : [10, 20],
+                    '禁区2' : [-10, 20],
+                    '禁区弧线1' : [0, -20],
+                    '禁区弧线2' : [0, -20],
+                    '中圈' : [0, -20],
+                    '开球点' : [0, 20]
+                    },
+                    markPoint : {
+                    symbol:'circle',
+                    symbolSize : 20,
+                    effect : {
+                    show: true,
+                    color: 'lime'
+                    },
+                    data : [
+                    {name: '开球点', value: 100, geoCoord:[425.126, 296.913]}
+                    ]
+                    },
+                    markLine : {
+                    smooth:true,
+                    effect : {
+                    show: true,
+                    scaleSize: 1,
+                    period: 20,
+                    color: '#fff',
+                    shadowBlur: 5
+                    },
+                    itemStyle : {
+                    normal: {
+                    borderWidth:1,
+                    color: 'gold',
+                    lineStyle: {
+                    type: 'solid'
+                    }
+                    }
+                    },
+                    data : [
+                    [
+                    {name:'1', geoCoord:[96.879, 186.983]},
+                    {name:'2', geoCoord:[693.786, 297.939]}
+                    ],
+                    [
+                    {name:'2', geoCoord:[753.373, 186.983]},
+                    {name:'1', geoCoord:[156.467, 296.913]}
+                    ]
+                    ]
+                    }
+                    }
+                    ]
+                    };
+                </textarea>
+            </div>
+        </div>
+        <!--chart-->
+        <div class="span11" id="graphic_map_17">
+            <div id="chartArea_map_17" class="chartArea">
+            </div>
+            <div style="margin-top: 10px;">
+                <button id="refreshChart_map_17" class="btn btn-success btnInfo">刷新</button><button id="editCoder_map_17" class="btn btn-success btnInfo">代码编辑</button><span class="text-info themeSpan">切换主题</span><select id="theme-select_map_17" class="themeSelector"></select>
+                <span id="wrong-message" style="color:red"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../js/chartEditor10.js"></script>
+<script type="text/javascript">
+    $(function() {
+        //dom
+        var map_17_code = document.getElementById('code_map_17');
+        var map_17_chartArea = document.getElementById("chartArea_map_17");
+        var map_17_chartNote = document.getElementById('chartNote_map_17');
+        var map_17_domCode = document.getElementById('sidebar-code_map_17');
+        var map_17_domGraphic = document.getElementById('graphic_map_17');
+        var map_17_domMain = document.getElementById('chartArea_map_17');
+        var map_17_iconResize = document.getElementById('icon-resize_map_17');
+        var map_17_codeEditor = document.getElementById('editCoder_map_17');
+        var map_17_themSelect = document.getElementById('theme-select_map_17');
+        var map_17_refrechart = document.getElementById('refreshChart_map_17');
+        //options
+        var map_17_options = {dom: {}};
+        map_17_options.dom.chartArea = map_17_chartArea;
+        map_17_options.dom.code = map_17_code;
+        map_17_options.dom.domCode = map_17_domCode;
+        map_17_options.dom.chartNote = map_17_chartNote;
+        map_17_options.dom.domGraphic = map_17_domGraphic;
+        map_17_options.dom.domMain = map_17_domMain;
+        map_17_options.dom.iconResize = map_17_iconResize;
+        map_17_options.dom.codeEditor = map_17_codeEditor;
+        map_17_options.dom.themeSelect = map_17_themSelect;
+        map_17_options.dom.refreshChart = map_17_refrechart;
+        $("body").chartEditor10(map_17_options);
+    });
+</script>
+</body>
+</html>

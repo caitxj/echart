@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>雷达图</title>
+    <link href="../../css/codemirror.css" rel="stylesheet">
+    <link href="../../css/monokai.css" rel="stylesheet">
+    <link href="../../css/chart.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/esl.js"></script>
+    <script type="text/javascript" src="../../js/codemirror.js"></script>
+    <script type="text/javascript" src="../../js/javascript.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths:{
+                echarts:'../../js/echarts',
+                'echarts/chart/bar' : '../../js/echarts',
+                'echarts/chart/line': '../../js/echarts',
+                'echarts/chart/pie': '../../js/echarts',
+                'echarts/chart/radar': '../../js/echarts',
+                'theme':'../../js/theme'
+            }
+        });
+    </script>
+</head>
+<body>
+<div id="chartNote_radar_2" class="container-fluid chartNoteheader">
+    <div class="row-fluid">
+        <div class="page-header hheader" contenteditable="true">
+            <span class="htitle">标准填充雷达图<small>极坐标设置,填充样式</small></span>
+        </div>
+    </div>
+</div>
+<div id="char_main" class="container-fluid">
+    <div class="row-fluid">
+        <div id="sidebar-code_radar_2" class="span4" style="display: none;">
+            <div class="well sidebar-nav" style="height: 520px;">
+                <div class="nav-header"><a href="#"  style="float: right;"  class="icon-resize-full"  id ="icon-resize_radar_2" ></a>option</div>
+                <textarea id="code_radar_2" name="code">
+                    option = {
+                    title : {
+                    text: '罗纳尔多 vs 舍普琴科',
+                    subtext: '完全实况球员数据'
+                    },
+                    tooltip : {
+                    trigger: 'axis'
+                    },
+                    legend: {
+                    x : 'center',
+                    data:['罗纳尔多','舍普琴科']
+                    },
+                    toolbox: {
+                    show : true,
+                    feature : {
+                    mark : {show: true},
+                    dataView : {show: true, readOnly: false},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                    }
+                    },
+                    calculable : true,
+                    polar : [
+                    {
+                    indicator : [
+                    {text : '进攻', max  : 100},
+                    {text : '防守', max  : 100},
+                    {text : '体能', max  : 100},
+                    {text : '速度', max  : 100},
+                    {text : '力量', max  : 100},
+                    {text : '技巧', max  : 100}
+                    ],
+                    radius : 130
+                    }
+                    ],
+                    series : [
+                    {
+                    name: '完全实况球员数据',
+                    type: 'radar',
+                    itemStyle: {
+                    normal: {
+                    areaStyle: {
+                    type: 'default'
+                    }
+                    }
+                    },
+                    data : [
+                    {
+                    value : [97, 42, 88, 94, 90, 86],
+                    name : '舍普琴科'
+                    },
+                    {
+                    value : [97, 32, 74, 95, 88, 92],
+                    name : '罗纳尔多'
+                    }
+                    ]
+                    }
+                    ]
+                    };
+                </textarea>
+            </div>
+        </div>
+        <!--chart-->
+        <div class="span11" id="graphic_radar_2">
+            <div id="chartArea_radar_2" class="chartArea">
+            </div>
+            <div style="margin-top: 10px;">
+                <button id="refreshChart_radar_2" class="btn btn-success btnInfo">刷新</button><button id="editCoder_radar_2" class="btn btn-success btnInfo">代码编辑</button><span class="text-info themeSpan">切换主题</span><select id="theme-select_radar_2" class="themeSelector"></select>
+                <span id="wrong-message" style="color:red"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../js/chartEditor10.js"></script>
+<script type="text/javascript">
+    $(function(){
+        //dom
+        var radar_2_code=document.getElementById('code_radar_2');
+        var radar_2_chartArea=document.getElementById("chartArea_radar_2");
+        var radar_2_chartNote=document.getElementById('chartNote_radar_2');
+        var radar_2_domCode = document.getElementById('sidebar-code_radar_2');
+        var radar_2_domGraphic = document.getElementById('graphic_radar_2');
+        var radar_2_domMain = document.getElementById('chartArea_radar_2');
+        var radar_2_iconResize = document.getElementById('icon-resize_radar_2');
+        var radar_2_codeEditor=document.getElementById('editCoder_radar_2');
+        var radar_2_themSelect=document.getElementById('theme-select_radar_2');
+        var radar_2_refrechart=document.getElementById('refreshChart_radar_2');
+        //options
+        var radar_2_options={dom:{}};
+        radar_2_options.dom.chartArea=radar_2_chartArea;
+        radar_2_options.dom.code=radar_2_code;
+        radar_2_options.dom.domCode=radar_2_domCode;
+        radar_2_options.dom.chartNote=radar_2_chartNote;
+        radar_2_options.dom.domGraphic=radar_2_domGraphic;
+        radar_2_options.dom.domMain=radar_2_domMain;
+        radar_2_options.dom.iconResize=radar_2_iconResize;
+        radar_2_options.dom.codeEditor=radar_2_codeEditor;
+        radar_2_options.dom.themeSelect=radar_2_themSelect;
+        radar_2_options.dom.refreshChart=radar_2_refrechart;
+        $("body").chartEditor10(radar_2_options);
+    });
+</script>
+</body>
+</html>

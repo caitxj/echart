@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>组件</title>
+    <link href="../../css/codemirror.css" rel="stylesheet">
+    <link href="../../css/monokai.css" rel="stylesheet">
+    <link href="../../css/chart.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/esl.js"></script>
+    <script type="text/javascript" src="../../js/codemirror.js"></script>
+    <script type="text/javascript" src="../../js/javascript.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths:{
+                echarts:'../../js/echarts',
+                'echarts/chart/bar' : '../../js/echarts',
+                'echarts/chart/line': '../../js/echarts',
+                'echarts/chart/pie': '../../js/echarts',
+                'echarts/chart/map': '../../js/echarts-map',
+                'theme':'../../js/theme'
+            }
+        });
+    </script>
+</head>
+<body>
+<div id="chartNote_plugin_6" class="container-fluid chartNoteheader">
+    <div class="row-fluid">
+        <div class="page-header hheader" contenteditable="true">
+            <span class="htitle">值域控件<small>个性化布局,背景,拖拽手柄样式等</small></span>
+        </div>
+    </div>
+</div>
+<div id="char_main_plugin_6" class="container-fluid">
+    <div class="row-fluid">
+        <div id="sidebar-code_plugin_6" class="span4" style="display: none;">
+            <div class="well sidebar-nav" style="height: 520px;">
+                <div class="nav-header"><a href="#" style="float: right;"  class="icon-resize-full"  id ="icon-resize_plugin_6" ></a>option</div>
+                <textarea id="code_plugin_6" name="code">
+                    dataRangeStyle = [
+                    // 0
+                    {
+                    min: 0,
+                    max: 2000,
+                    formatter : function(v, v2){
+                    if (v2 < 1000) { return '低于' + v2}
+                    else if (v > 1000) { return '高于' + v}
+                    else { return '中' }
+                    }
+                    },
+                    // 1
+                    {
+                    orient: 'horizontal', // 'vertical'
+                    min: 0,
+                    max: 2000,
+                    formatter : '{value} 到 {value2}'
+                    },
+                    // 2
+                    {
+                    text:['高','低'],           // 文本，默认为数值文本
+                    min: 0,
+                    max: 2000
+                    },
+                    // 3
+                    {
+                    orient: 'horizontal', // 'vertical'
+                    text:['高','低'],           // 文本，默认为数值文本
+                    min: 0,
+                    max: 2000
+                    },
+                    // 4
+                    {
+                    splitNumber: 0,
+                    min: 0,
+                    max: 2000
+                    },
+                    // 5
+                    {
+                    orient: 'horizontal', // 'vertical'
+                    splitNumber: 0,
+                    min: 0,
+                    max: 2000
+                    },
+                    // 6
+                    {
+                    splitNumber: 0,
+                    text:['高','低'],            // 文本，默认为数值文本
+                    min: 0,
+                    max: 2000
+                    },
+                    // 7
+                    {
+                    orient: 'horizontal', // 'vertical'
+                    splitNumber: 0,
+                    text:['高','低'],            // 文本，默认为数值文本
+                    min: 0,
+                    max: 2000
+                    },
+                    // 8
+                    {
+                    calculable : true,
+                    min: 0,
+                    max: 2000,
+                    formatter : function(v) {
+                    if (v > 1500) {return v + ' (高)'}
+                    else if (v < 500) {return v + ' (低)'}
+                    else {return v + ' (中)'};
+                    }
+                    },
+                    // 9
+                    {
+                    orient: 'horizontal',      // 'vertical'
+                    calculable : true,
+                    min: 0,
+                    max: 2000
+                    },
+                    // 10
+                    {
+                    color:['red','yellow'],    //颜色
+                    text:['高','低'],            // 文本，默认为数值文本
+                    calculable : true,
+                    min: 0,
+                    max: 2000
+                    },
+                    // 11
+                    {
+                    orient: 'horizontal',      // 'vertical'
+                    color:['red','yellow'],    //颜色
+                    text:['高','低'],            // 文本，默认为数值文本
+                    calculable : true,
+                    min: 0,
+                    max: 2000
+                    }
+                    ]
+                    var cur = curIndex++%dataRangeStyle.length;
+                    option = {
+                    title:{
+                    text: '当前样式序号:' + cur,
+                    subtext: 'NO.' + cur
+                    },
+                    dataRange: dataRangeStyle[cur],
+                    series : [
+                    {
+                    name: '',
+                    type: 'map',
+                    data:[]
+                    }
+                    ]
+                    };
+                </textarea>
+            </div>
+        </div>
+        <!--chart-->
+        <div class="span11" id="graphic_plugin_6">
+            <div id="chartArea_plugin_6" class="chartArea">
+            </div>
+            <div style="margin-top: 10px;">
+                <button id="refreshChart_plugin_6" class="btn btn-success btnInfo">刷新</button><button id="editCoder_plugin_6" class="btn btn-success btnInfo">代码编辑</button><span class="text-info themeSpan">切换主题</span><select id="theme-select_plugin_6" class="themeSelector"></select>
+                <span id="wrong-message" style="color:red"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../js/chartEditor10.js"></script>
+<script type="text/javascript">
+    var curIndex = 0;
+    $(function(){
+        //dom
+        var plugin_6_code=document.getElementById('code_plugin_6');
+        var plugin_6_chartArea=document.getElementById("chartArea_plugin_6");
+        var plugin_6_chartNote=document.getElementById('chartNote_plugin_6');
+        var plugin_6_domCode = document.getElementById('sidebar-code_plugin_6');
+        var plugin_6_domGraphic = document.getElementById('graphic_plugin_6');
+        var plugin_6_domMain = document.getElementById('chartArea_plugin_6');
+        var plugin_6_iconResize = document.getElementById('icon-resize_plugin_6');
+        var plugin_6_codeEditor=document.getElementById('editCoder_plugin_6');
+        var plugin_6_themSelect=document.getElementById('theme-select_plugin_6');
+        var plugin_6_refrechart=document.getElementById('refreshChart_plugin_6');
+        //options
+        var plugin_6_options={dom:{}};
+        plugin_6_options.dom.chartArea=plugin_6_chartArea;
+        plugin_6_options.dom.code=plugin_6_code;
+        plugin_6_options.dom.domCode=plugin_6_domCode;
+        plugin_6_options.dom.chartNote=plugin_6_chartNote;
+        plugin_6_options.dom.domGraphic=plugin_6_domGraphic;
+        plugin_6_options.dom.domMain=plugin_6_domMain;
+        plugin_6_options.dom.iconResize=plugin_6_iconResize;
+        plugin_6_options.dom.codeEditor=plugin_6_codeEditor;
+        plugin_6_options.dom.themeSelect=plugin_6_themSelect;
+        plugin_6_options.dom.refreshChart=plugin_6_refrechart;
+        plugin_6_options.needMap=true;
+        $("body").chartEditor10(plugin_6_options);
+    });
+</script>
+</body>
+</html>

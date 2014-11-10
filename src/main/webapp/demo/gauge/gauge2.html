@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>仪表盘</title>
+    <link href="../../css/codemirror.css" rel="stylesheet">
+    <link href="../../css/monokai.css" rel="stylesheet">
+    <link href="../../css/chart.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/esl.js"></script>
+    <script type="text/javascript" src="../../js/codemirror.js"></script>
+    <script type="text/javascript" src="../../js/javascript.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths:{
+                echarts:'../../js/echarts',
+                'echarts/chart/bar' : '../../js/echarts',
+                'echarts/chart/line': '../../js/echarts',
+                'echarts/chart/pie': '../../js/echarts',
+                'echarts/chart/gauge': '../../js/echarts',
+                'theme':'../../js/theme'
+            }
+        });
+    </script>
+</head>
+<body>
+<div id="chartNote_gauge_2" class="container-fluid chartNoteheader">
+    <div class="row-fluid">
+        <div class="page-header hheader" contenteditable="true">
+            <span class="htitle">标准仪表盘<small>个性化</small></span>
+        </div>
+    </div>
+</div>
+<div id="char_main_gauge_2" class="container-fluid">
+    <div class="row-fluid">
+        <div id="sidebar-code_gauge_2" class="span4" style="display: none;">
+            <div class="well sidebar-nav" style="height: 520px;">
+                <div class="nav-header"><a href="#" style="float: right;"  class="icon-resize-full"  id ="icon-resize_gauge_2" ></a>option</div>
+                <textarea id="code_gauge_2" name="code">
+                    option = {
+                    tooltip : {
+                    formatter: "{a} <br/>{b} : {c}%"
+                    },
+                    toolbox: {
+                    show : true,
+                    feature : {
+                    mark : {show: true},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                    }
+                    },
+                    series : [
+                    {
+                    name:'业务指标',
+                    type:'gauge',
+                    detail : {formatter:'{value}%'},
+                    data:[{value: 50, name: '完成率'}]
+                    }
+                    ]
+                    };
+                    clearInterval(timeTicket);
+                    var timeTicket = setInterval(function (){
+                    option.series[0].data[0].value = (Math.random()*100).toFixed(2) - 0;
+                    myChart.setOption(option, true);
+                    },2000);
+                </textarea>
+            </div>
+        </div>
+        <!--chart-->
+        <div class="span11" id="graphic_gauge_2">
+            <div id="chartArea_gauge_2" class="chartArea">
+            </div>
+            <div style="margin-top: 10px;">
+                <button id="refreshChart_gauge_2" class="btn btn-success btnInfo">刷新</button><button id="editCoder_gauge_2" class="btn btn-success btnInfo">代码编辑</button><span class="text-info themeSpan">切换主题</span><select id="theme-select_gauge_2" class="themeSelector"></select>
+                <span id="wrong-message" style="color:red"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../js/chartEditor10.js"></script>
+<script type="text/javascript">
+    $(function(){
+        //dom
+        var gauge_2_code=document.getElementById('code_gauge_2');
+        var gauge_2_chartArea=document.getElementById("chartArea_gauge_2");
+        var gauge_2_chartNote=document.getElementById('chartNote_gauge_2');
+        var gauge_2_domCode = document.getElementById('sidebar-code_gauge_2');
+        var gauge_2_domGraphic = document.getElementById('graphic_gauge_2');
+        var gauge_2_domMain = document.getElementById('chartArea_gauge_2');
+        var gauge_2_iconResize = document.getElementById('icon-resize_gauge_2');
+        var gauge_2_codeEditor=document.getElementById('editCoder_gauge_2');
+        var gauge_2_themSelect=document.getElementById('theme-select_gauge_2');
+        var gauge_2_refrechart=document.getElementById('refreshChart_gauge_2');
+        //options
+        var gauge_2_options={dom:{}};
+        gauge_2_options.dom.chartArea=gauge_2_chartArea;
+        gauge_2_options.dom.code=gauge_2_code;
+        gauge_2_options.dom.domCode=gauge_2_domCode;
+        gauge_2_options.dom.chartNote=gauge_2_chartNote;
+        gauge_2_options.dom.domGraphic=gauge_2_domGraphic;
+        gauge_2_options.dom.domMain=gauge_2_domMain;
+        gauge_2_options.dom.iconResize=gauge_2_iconResize;
+        gauge_2_options.dom.codeEditor=gauge_2_codeEditor;
+        gauge_2_options.dom.themeSelect=gauge_2_themSelect;
+        gauge_2_options.dom.refreshChart=gauge_2_refrechart;
+        $("body").chartEditor10(gauge_2_options);
+    });
+</script>
+</body>
+</html>

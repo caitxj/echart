@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>漏斗图</title>
+    <link href="../../css/codemirror.css" rel="stylesheet">
+    <link href="../../css/monokai.css" rel="stylesheet">
+    <link href="../../css/chart.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/esl.js"></script>
+    <script type="text/javascript" src="../../js/codemirror.js"></script>
+    <script type="text/javascript" src="../../js/javascript.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths:{
+                echarts:'../../js/echarts',
+                'echarts/chart/bar' : '../../js/echarts',
+                'echarts/chart/line': '../../js/echarts',
+                'echarts/chart/pie': '../../js/echarts',
+                'echarts/chart/funnel': '../../js/echarts',
+                'theme':'../../js/theme'
+            }
+        });
+    </script>
+</head>
+<body>
+<div id="chartNote_funnel_4" class="container-fluid chartNoteheader">
+    <div class="row-fluid">
+        <div class="page-header hheader" contenteditable="true">
+            <span class="htitle">标准漏斗图<small>个性化</small></span>
+        </div>
+    </div>
+</div>
+<div id="char_main_funnel_4" class="container-fluid">
+    <div class="row-fluid">
+        <div id="sidebar-code_funnel_4" class="span4" style="display: none;">
+            <div class="well sidebar-nav" style="height: 520px;">
+                <div class="nav-header"><a href="#" style="float: right;"  class="icon-resize-full"  id ="icon-resize_funnel_4" ></a>option</div>
+                <textarea id="code_funnel_4" name="code">
+                    option = {
+                    title : {
+                    text: '漏斗图',
+                    subtext: '纯属虚构'
+                    },
+                    tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c}%"
+                    },
+                    toolbox: {
+                    show : true,
+                    feature : {
+                    mark : {show: true},
+                    dataView : {show: true, readOnly: false},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                    }
+                    },
+                    legend: {
+                    data : ['展现','点击','访问','咨询','订单']
+                    },
+                    calculable : true,
+                    series : [
+                    {
+                    name:'漏斗图',
+                    type:'funnel',
+                    x: '10%',
+                    y: 60,
+                    //x2: 80,
+                    y2: 60,
+                    width: '80%',
+                    // height: {totalHeight} - y - y2,
+                    min: 0,
+                    max: 100,
+                    minSize: '0%',
+                    maxSize: '100%',
+                    sort : 'descending', // 'ascending', 'descending'
+                    gap : 10,
+                    itemStyle: {
+                    normal: {
+                    // color: 各异,
+                    borderColor: '#fff',
+                    borderWidth: 1,
+                    label: {
+                    show: true,
+                    position: 'inside'
+                    // textStyle: null      // 默认使用全局文本样式，详见TEXTSTYLE
+                    },
+                    labelLine: {
+                    show: false,
+                    length: 10,
+                    lineStyle: {
+                    // color: 各异,
+                    width: 1,
+                    type: 'solid'
+                    }
+                    }
+                    },
+                    emphasis: {
+                    // color: 各异,
+                    borderColor: 'red',
+                    borderWidth: 5,
+                    label: {
+                    show: true,
+                    formatter: '{b}:{c}%',
+                    textStyle:{
+                    fontSize:20
+                    }
+                    },
+                    labelLine: {
+                    show: true
+                    }
+                    }
+                    },
+                    data:[
+                    {value:60, name:'访问'},
+                    {value:40, name:'咨询'},
+                    {value:20, name:'订单'},
+                    {value:80, name:'点击'},
+                    {value:100, name:'展现'}
+                    ]
+                    }
+                    ]
+                    };
+                </textarea>
+            </div>
+        </div>
+        <!--chart-->
+        <div class="span11" id="graphic_funnel_4">
+            <div id="chartArea_funnel_4" class="chartArea">
+            </div>
+            <div style="margin-top: 10px;">
+                <button id="refreshChart_funnel_4" class="btn btn-success btnInfo">刷新</button><button id="editCoder_funnel_4" class="btn btn-success btnInfo">代码编辑</button><span class="text-info themeSpan">切换主题</span><select id="theme-select_funnel_4" class="themeSelector"></select>
+                <span id="wrong-message" style="color:red"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../js/chartEditor10.js"></script>
+<script type="text/javascript">
+    $(function(){
+        //dom
+        var funnel_4_code=document.getElementById('code_funnel_4');
+        var funnel_4_chartArea=document.getElementById("chartArea_funnel_4");
+        var funnel_4_chartNote=document.getElementById('chartNote_funnel_4');
+        var funnel_4_domCode = document.getElementById('sidebar-code_funnel_4');
+        var funnel_4_domGraphic = document.getElementById('graphic_funnel_4');
+        var funnel_4_domMain = document.getElementById('chartArea_funnel_4');
+        var funnel_4_iconResize = document.getElementById('icon-resize_funnel_4');
+        var funnel_4_codeEditor=document.getElementById('editCoder_funnel_4');
+        var funnel_4_themSelect=document.getElementById('theme-select_funnel_4');
+        var funnel_4_refrechart=document.getElementById('refreshChart_funnel_4');
+        //options
+        var funnel_4_options={dom:{}};
+        funnel_4_options.dom.chartArea=funnel_4_chartArea;
+        funnel_4_options.dom.code=funnel_4_code;
+        funnel_4_options.dom.domCode=funnel_4_domCode;
+        funnel_4_options.dom.chartNote=funnel_4_chartNote;
+        funnel_4_options.dom.domGraphic=funnel_4_domGraphic;
+        funnel_4_options.dom.domMain=funnel_4_domMain;
+        funnel_4_options.dom.iconResize=funnel_4_iconResize;
+        funnel_4_options.dom.codeEditor=funnel_4_codeEditor;
+        funnel_4_options.dom.themeSelect=funnel_4_themSelect;
+        funnel_4_options.dom.refreshChart=funnel_4_refrechart;
+        $("body").chartEditor10(funnel_4_options);
+    });
+</script>
+</body>
+</html>

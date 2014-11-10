@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>力导向分布图</title>
+    <link href="../../css/codemirror.css" rel="stylesheet">
+    <link href="../../css/monokai.css" rel="stylesheet">
+    <link href="../../css/chart.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/esl.js"></script>
+    <script type="text/javascript" src="../../js/codemirror.js"></script>
+    <script type="text/javascript" src="../../js/javascript.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths:{
+                echarts:'../../js/echarts',
+                'echarts/chart/bar' : '../../js/echarts',
+                'echarts/chart/line': '../../js/echarts',
+                'echarts/chart/pie': '../../js/echarts',
+                'echarts/chart/force': '../../js/echarts',
+                'theme':'../../js/theme'
+            }
+        });
+    </script>
+</head>
+<body>
+<div id="chartNote_force_1" class="container-fluid chartNoteheader">
+    <div class="row-fluid">
+        <div class="page-header hheader" contenteditable="true">
+            <span class="htitle">简单关系网<small>数据格式</small></span>
+        </div>
+    </div>
+</div>
+<div id="char_main_force_1" class="container-fluid">
+    <div class="row-fluid">
+        <div id="sidebar-code_force_1" class="span4" style="display: none;">
+            <div class="well sidebar-nav" style="height: 520px;">
+                <div class="nav-header"><a href="#" style="float: right;"  class="icon-resize-full"  id ="icon-resize_force_1" ></a>option</div>
+                <textarea id="code_force_1" name="code">
+                    option = {
+                    title : {
+                    text: '人物关系：乔布斯',
+                    subtext: '数据来自人立方',
+                    x:'right',
+                    y:'bottom'
+                    },
+                    tooltip : {
+                    trigger: 'item',
+                    formatter: '{a} : {b}'
+                    },
+                    toolbox: {
+                    show : true,
+                    feature : {
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                    }
+                    },
+                    legend: {
+                    x: 'left',
+                    data:['家人','朋友']
+                    },
+                    series : [
+                    {
+                    type:'force',
+                    name : "人物关系",
+                    categories : [
+                    {
+                    name: '人物'
+                    },
+                    {
+                    name: '家人'
+                    },
+                    {
+                    name:'朋友'
+                    }
+                    ],
+                    itemStyle: {
+                    normal: {
+                    label: {
+                    show: true,
+                    textStyle: {
+                    color: '#333'
+                    }
+                    },
+                    nodeStyle : {
+                    brushType : 'both',
+                    strokeColor : 'rgba(255,215,0,0.4)',
+                    lineWidth : 1
+                    }
+                    },
+                    emphasis: {
+                    label: {
+                    show: false
+                    // textStyle: null      // 默认使用全局文本样式，详见TEXTSTYLE
+                    },
+                    nodeStyle : {
+                    //r: 30
+                    },
+                    linkStyle : {}
+                    }
+                    },
+                    useWorker: false,
+                    minRadius : 15,
+                    maxRadius : 25,
+                    gravity: 1.1,
+                    scaling: 1.1,
+                    linkSymbol: 'arrow',
+                    nodes:[
+                    {category:0, name: '乔布斯', value : 10},
+                    {category:1, name: '丽萨-乔布斯',value : 2},
+                    {category:1, name: '保罗-乔布斯',value : 3},
+                    {category:1, name: '克拉拉-乔布斯',value : 3},
+                    {category:1, name: '劳伦-鲍威尔',value : 7},
+                    {category:2, name: '史蒂夫-沃兹尼艾克',value : 5},
+                    {category:2, name: '奥巴马',value : 8},
+                    {category:2, name: '比尔-盖茨',value : 9},
+                    {category:2, name: '乔纳森-艾夫',value : 4},
+                    {category:2, name: '蒂姆-库克',value : 4},
+                    {category:2, name: '龙-韦恩',value : 1},
+                    ],
+                    links : [
+                    {source : '丽萨-乔布斯', target : '乔布斯', weight : 1},
+                    {source : '保罗-乔布斯', target : '乔布斯', weight : 2},
+                    {source : '克拉拉-乔布斯', target : '乔布斯', weight : 1},
+                    {source : '劳伦-鲍威尔', target : '乔布斯', weight : 2},
+                    {source : '史蒂夫-沃兹尼艾克', target : '乔布斯', weight : 3},
+                    {source : '奥巴马', target : '乔布斯', weight : 6},
+                    {source : '比尔-盖茨', target : '乔布斯', weight : 6},
+                    {source : '乔纳森-艾夫', target : '乔布斯', weight : 1},
+                    {source : '蒂姆-库克', target : '乔布斯', weight : 1},
+                    {source : '龙-韦恩', target : '乔布斯', weight : 1},
+                    {source : '克拉拉-乔布斯', target : '保罗-乔布斯', weight : 1},
+                    {source : '奥巴马', target : '保罗-乔布斯', weight : 1},
+                    {source : '奥巴马', target : '克拉拉-乔布斯', weight : 1},
+                    {source : '奥巴马', target : '劳伦-鲍威尔', weight : 1},
+                    {source : '奥巴马', target : '史蒂夫-沃兹尼艾克', weight : 1},
+                    {source : '比尔-盖茨', target : '奥巴马', weight : 6},
+                    {source : '比尔-盖茨', target : '克拉拉-乔布斯', weight : 1},
+                    {source : '蒂姆-库克', target : '奥巴马', weight : 1}
+                    ]
+                    }
+                    ]
+                    };
+                </textarea>
+            </div>
+        </div>
+        <!--chart-->
+        <div class="span11" id="graphic_force_1">
+            <div id="chartArea_force_1" class="chartArea">
+            </div>
+            <div style="margin-top: 10px;">
+                <button id="refreshChart_force_1" class="btn btn-success btnInfo">刷新</button><button id="editCoder_force_1" class="btn btn-success btnInfo">代码编辑</button><span class="text-info themeSpan">切换主题</span><select id="theme-select_force_1" class="themeSelector"></select>
+                <span id="wrong-message" style="color:red"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../js/chartEditor10.js"></script>
+<script type="text/javascript">
+    $(function(){
+        //dom
+        var force_1_code=document.getElementById('code_force_1');
+        var force_1_chartArea=document.getElementById("chartArea_force_1");
+        var force_1_chartNote=document.getElementById('chartNote_force_1');
+        var force_1_domCode = document.getElementById('sidebar-code_force_1');
+        var force_1_domGraphic = document.getElementById('graphic_force_1');
+        var force_1_domMain = document.getElementById('chartArea_force_1');
+        var force_1_iconResize = document.getElementById('icon-resize_force_1');
+        var force_1_codeEditor=document.getElementById('editCoder_force_1');
+        var force_1_themSelect=document.getElementById('theme-select_force_1');
+        var force_1_refrechart=document.getElementById('refreshChart_force_1');
+        //options
+        var force_1_options={dom:{}};
+        force_1_options.dom.chartArea=force_1_chartArea;
+        force_1_options.dom.code=force_1_code;
+        force_1_options.dom.domCode=force_1_domCode;
+        force_1_options.dom.chartNote=force_1_chartNote;
+        force_1_options.dom.domGraphic=force_1_domGraphic;
+        force_1_options.dom.domMain=force_1_domMain;
+        force_1_options.dom.iconResize=force_1_iconResize;
+        force_1_options.dom.codeEditor=force_1_codeEditor;
+        force_1_options.dom.themeSelect=force_1_themSelect;
+        force_1_options.dom.refreshChart=force_1_refrechart;
+        $("body").chartEditor10(force_1_options);
+    });
+</script>
+</body>
+</html>

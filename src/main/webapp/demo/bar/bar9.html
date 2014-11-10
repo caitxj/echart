@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>柱状图</title>
+    <link href="../../css/codemirror.css" rel="stylesheet">
+    <link href="../../css/monokai.css" rel="stylesheet">
+    <link href="../../css/chart.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/esl.js"></script>
+    <script type="text/javascript" src="../../js/codemirror.js"></script>
+    <script type="text/javascript" src="../../js/javascript.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths:{
+                echarts:'../../js/echarts',
+                'echarts/chart/bar' : '../../js/echarts',
+                'echarts/chart/line': '../../js/echarts',
+                'echarts/chart/pie': '../../js/echarts',
+                'theme':'../../js/theme'
+            }
+        });
+    </script>
+</head>
+<body>
+<div id="chartNote_bar_9" class="container-fluid chartNoteheader">
+    <div class="row-fluid">
+        <div class="page-header hheader" contenteditable="true">
+            <span class="htitle">多维条形图<small>个性化样式,文本标签显示,透明数据驱动样式</small></span>
+        </div>
+    </div>
+</div>
+<div id="char_main" class="container-fluid">
+    <div class="row-fluid">
+        <div id="sidebar-code_bar_9" class="span4" style="display: none;">
+            <div class="well sidebar-nav" style="height: 520px;">
+                <div class="nav-header"><a href="#"  style="float: right;"  class="icon-resize-full"  id ="icon-resize_bar_9" ></a>option</div>
+                <textarea id="code_bar_9" name="code">
+                    var placeHoledStyle = {
+                    normal:{
+                    borderColor:'rgba(0,0,0,0)',
+                    color:'rgba(0,0,0,0)'
+                    },
+                    emphasis:{
+                    borderColor:'rgba(0,0,0,0)',
+                    color:'rgba(0,0,0,0)'
+                    }
+                    };
+                    var dataStyle = {
+                    normal: {
+                    label : {
+                    show: true,
+                    position: 'insideLeft',
+                    formatter: '{c}%'
+                    }
+                    }
+                    };
+                    option = {
+                    title: {
+                    text: '多维条形图',
+                    subtext: 'From ExcelHome',
+                    sublink: 'http://e.weibo.com/1341556070/AiEscco0H'
+                    },
+                    tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                    type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    },
+                    formatter : '{b}<br/>{a0}:{c0}%<br/>{a2}:{c2}%<br/>{a4}:{c4}%<br/>{a6}:{c6}%'
+                    },
+                    legend: {
+                    y: 55,
+                    itemGap : document.getElementById('char_main').offsetWidth / 8,
+                    data:['GML', 'PYP','WTC', 'ZTW']
+                    },
+                    toolbox: {
+                    show : true,
+                    feature : {
+                    mark : {show: true},
+                    dataView : {show: true, readOnly: false},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                    }
+                    },
+                    grid: {
+                    y: 80,
+                    y2: 30
+                    },
+                    xAxis : [
+                    {
+                    type : 'value',
+                    position: 'top',
+                    splitLine: {show: false},
+                    axisLabel: {show: false}
+                    }
+                    ],
+                    yAxis : [
+                    {
+                    type : 'category',
+                    splitLine: {show: false},
+                    data : ['重庆', '天津', '上海', '北京']
+                    }
+                    ],
+                    series : [
+                    {
+                    name:'GML',
+                    type:'bar',
+                    stack: '总量',
+                    itemStyle : dataStyle,
+                    data:[38, 50, 33, 72]
+                    },
+                    {
+                    name:'GML',
+                    type:'bar',
+                    stack: '总量',
+                    itemStyle: placeHoledStyle,
+                    data:[62, 50, 67, 28]
+                    },
+                    {
+                    name:'PYP',
+                    type:'bar',
+                    stack: '总量',
+                    itemStyle : dataStyle,
+                    data:[61, 41, 42, 30]
+                    },
+                    {
+                    name:'PYP',
+                    type:'bar',
+                    stack: '总量',
+                    itemStyle: placeHoledStyle,
+                    data:[39, 59, 58, 70]
+                    },
+                    {
+                    name:'WTC',
+                    type:'bar',
+                    stack: '总量',
+                    itemStyle : dataStyle,
+                    data:[37, 35, 44, 60]
+                    },
+                    {
+                    name:'WTC',
+                    type:'bar',
+                    stack: '总量',
+                    itemStyle: placeHoledStyle,
+                    data:[63, 65, 56, 40]
+                    },
+                    {
+                    name:'ZTW',
+                    type:'bar',
+                    stack: '总量',
+                    itemStyle : dataStyle,
+                    data:[71, 50, 31, 39]
+                    },
+                    {
+                    name:'ZTW',
+                    type:'bar',
+                    stack: '总量',
+                    itemStyle: placeHoledStyle,
+                    data:[29, 50, 69, 61]
+                    }
+                    ]
+                    };
+                </textarea>
+            </div>
+        </div>
+        <!--chart-->
+        <div class="span11" id="graphic_bar_9">
+            <div id="chartArea_bar_9" class="chartArea">
+            </div>
+            <div style="margin-top: 10px;">
+                <button id="refreshChart_bar_9" class="btn btn-success btnInfo">刷新</button><button id="editCoder_bar_9" class="btn btn-success btnInfo">代码编辑</button><span class="text-info themeSpan">切换主题</span><select id="theme-select_bar_9" class="themeSelector"></select>
+                <span id="wrong-message" style="color:red"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../js/chartEditor10.js"></script>
+<script type="text/javascript">
+    $(function(){
+        //dom
+        var bar_9_code=document.getElementById('code_bar_9');
+        var bar_9_chartArea=document.getElementById("chartArea_bar_9");
+        var bar_9_chartNote=document.getElementById('chartNote_bar_9');
+        var bar_9_domCode = document.getElementById('sidebar-code_bar_9');
+        var bar_9_domGraphic = document.getElementById('graphic_bar_9');
+        var bar_9_domMain = document.getElementById('chartArea_bar_9');
+        var bar_9_iconResize = document.getElementById('icon-resize_bar_9');
+        var bar_9_codeEditor=document.getElementById('editCoder_bar_9');
+        var bar_9_themSelect=document.getElementById('theme-select_bar_9');
+        var bar_9_refrechart=document.getElementById('refreshChart_bar_9');
+        //options
+        var bar_9_options={dom:{}};
+        bar_9_options.dom.chartArea=bar_9_chartArea;
+        bar_9_options.dom.code=bar_9_code;
+        bar_9_options.dom.domCode=bar_9_domCode;
+        bar_9_options.dom.chartNote=bar_9_chartNote;
+        bar_9_options.dom.domGraphic=bar_9_domGraphic;
+        bar_9_options.dom.domMain=bar_9_domMain;
+        bar_9_options.dom.iconResize=bar_9_iconResize;
+        bar_9_options.dom.codeEditor=bar_9_codeEditor;
+        bar_9_options.dom.themeSelect=bar_9_themSelect;
+        bar_9_options.dom.refreshChart=bar_9_refrechart;
+        $("body").chartEditor10(bar_9_options);
+    });
+</script>
+</body>
+</html>

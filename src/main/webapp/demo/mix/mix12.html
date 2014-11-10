@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>混搭</title>
+    <link href="../../css/codemirror.css" rel="stylesheet">
+    <link href="../../css/monokai.css" rel="stylesheet">
+    <link href="../../css/chart.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/esl.js"></script>
+    <script type="text/javascript" src="../../js/codemirror.js"></script>
+    <script type="text/javascript" src="../../js/javascript.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths:{
+                echarts:'../../js/echarts',
+                'echarts/chart/bar' : '../../js/echarts',
+                'echarts/chart/line': '../../js/echarts',
+                'echarts/chart/pie': '../../js/echarts',
+                'echarts/chart/scatter': '../../js/echarts',
+                'echarts/chart/funnel': '../../js/echarts',
+                'theme':'../../js/theme'
+            }
+        });
+    </script>
+</head>
+<body>
+<div id="chartNote_mix_12" class="container-fluid chartNoteheader">
+    <div class="row-fluid">
+        <div class="page-header hheader" contenteditable="true">
+            <span class="htitle">虫洞<small>多层嵌套雷达图</small></span>
+        </div>
+    </div>
+</div>
+<div id="char_main_mix_12" class="container-fluid">
+<div class="row-fluid">
+    <div id="sidebar-code_mix_12" class="span4" style="display: none;">
+        <div class="well sidebar-nav" style="height: 520px;">
+            <div class="nav-header"><a href="#" style="float: right;"  class="icon-resize-full"  id ="icon-resize_mix_12" ></a>option</div>
+            <textarea id="code_mix_12" name="code">
+                option = {
+                color : (function (){
+                var zrColor = require('zrender/tool/color');
+                return zrColor.getStepColors('yellow', 'red', 28);
+                })(),
+                title : {
+                text: '浏览器占比变化',
+                subtext: '纯属虚构',
+                x:'right',
+                y:'bottom'
+                },
+                tooltip : {
+                trigger: 'item',
+                backgroundColor : 'rgba(0,0,250,0.2)'
+                },
+                legend: {
+                // orient : 'vertical',
+                //x : 'center',
+                data: function (){
+                var list = [];
+                for (var i = 1; i <=28; i++) {
+                list.push(i + 2000);
+                }
+                return list;
+                }()
+                },
+                toolbox: {
+                show : true,
+                orient : 'vertical',
+                y:'center',
+                feature : {
+                mark : {show: true},
+                dataView : {show: true, readOnly: false},
+                restore : {show: true},
+                saveAsImage : {show: true}
+                }
+                },
+                polar : [
+                {
+                indicator : [
+                { text: 'IE8-', max: 400},
+                { text: 'IE9+', max: 400},
+                { text: 'Safari', max: 400},
+                { text: 'Firefox', max: 400},
+                { text: 'Chrome', max: 400}
+                ],
+                center : ['50%', 240],
+                radius : 150
+                }
+                ],
+                calculable : false,
+                series : (function (){
+                var series = [];
+                for (var i = 1; i <= 28; i++) {
+                series.push({
+                name:'浏览器（数据纯属虚构）',
+                type:'radar',
+                symbol:'none',
+                itemStyle: {
+                normal: {
+                lineStyle: {
+                width:1
+                }
+                },
+                emphasis : {
+                areaStyle: {color:'rgba(0,250,0,0.3)'}
+                }
+                },
+                data:[
+                {
+                value:[
+                (40 - i) * 10,
+                (38 - i) * 4 + 60,
+                i * 5 + 10,
+                i * 9,
+                i * i /2
+                ],
+                name:i + 2000
+                }
+                ]
+                })
+                }
+                return series;
+                })()
+                };
+            </textarea>
+        </div>
+    </div>
+    <!--chart-->
+    <div class="span11" id="graphic_mix_12">
+        <div id="chartArea_mix_12" class="chartArea">
+        </div>
+        <div style="margin-top: 10px;">
+            <button id="refreshChart_mix_12" class="btn btn-success btnInfo">刷新</button><button id="editCoder_mix_12" class="btn btn-success btnInfo">代码编辑</button><span class="text-info themeSpan">切换主题</span><select id="theme-select_mix_12" class="themeSelector"></select>
+            <span id="wrong-message" style="color:red"></span>
+        </div>
+    </div>
+</div>
+</div>
+<script type="text/javascript" src="../../js/chartEditor10.js"></script>
+<script type="text/javascript">
+    $(function(){
+        //dom
+        var mix_12_code=document.getElementById('code_mix_12');
+        var mix_12_chartArea=document.getElementById("chartArea_mix_12");
+        var mix_12_chartNote=document.getElementById('chartNote_mix_12');
+        var mix_12_domCode = document.getElementById('sidebar-code_mix_12');
+        var mix_12_domGraphic = document.getElementById('graphic_mix_12');
+        var mix_12_domMain = document.getElementById('chartArea_mix_12');
+        var mix_12_iconResize = document.getElementById('icon-resize_mix_12');
+        var mix_12_codeEditor=document.getElementById('editCoder_mix_12');
+        var mix_12_themSelect=document.getElementById('theme-select_mix_12');
+        var mix_12_refrechart=document.getElementById('refreshChart_mix_12');
+        //options
+        var mix_12_options={dom:{}};
+        mix_12_options.dom.chartArea=mix_12_chartArea;
+        mix_12_options.dom.code=mix_12_code;
+        mix_12_options.dom.domCode=mix_12_domCode;
+        mix_12_options.dom.chartNote=mix_12_chartNote;
+        mix_12_options.dom.domGraphic=mix_12_domGraphic;
+        mix_12_options.dom.domMain=mix_12_domMain;
+        mix_12_options.dom.iconResize=mix_12_iconResize;
+        mix_12_options.dom.codeEditor=mix_12_codeEditor;
+        mix_12_options.dom.themeSelect=mix_12_themSelect;
+        mix_12_options.dom.refreshChart=mix_12_refrechart;
+        $("body").chartEditor10(mix_12_options);
+    });
+</script>
+</body>
+</html>

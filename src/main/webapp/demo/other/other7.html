@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>其他</title>
+    <link href="../../css/codemirror.css" rel="stylesheet">
+    <link href="../../css/monokai.css" rel="stylesheet">
+    <link href="../../css/chart.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/esl.js"></script>
+    <script type="text/javascript" src="../../js/codemirror.js"></script>
+    <script type="text/javascript" src="../../js/javascript.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths:{
+                echarts:'../../js/echarts',
+                'echarts/chart/bar' : '../../js/echarts',
+                'echarts/chart/line': '../../js/echarts',
+                'echarts/chart/pie': '../../js/echarts',
+                'echarts/chart/map': '../../js/echarts-map',
+                'theme':'../../js/theme'
+            }
+        });
+    </script>
+</head>
+<body>
+<div id="chartNote_other_7" class="container-fluid chartNoteheader">
+    <div class="row-fluid">
+        <div class="page-header hheader" contenteditable="true">
+            <span class="htitle">事件交互<small>可捕获的用户交互和数据变化事件,实现图表与外界的联系</small></span>
+        </div>
+    </div>
+</div>
+<div id="char_main_other_7" class="container-fluid">
+    <div class="row-fluid">
+        <div id="sidebar-code_other_7" class="span4" style="display: none;">
+            <div class="well sidebar-nav" style="height: 520px;">
+                <div class="nav-header"><a href="#" style="float: right;"  class="icon-resize-full"  id ="icon-resize_other_7" ></a>option</div>
+                <textarea id="code_other_7" name="code">
+                    option = {
+                    tooltip : {
+                    trigger: 'axis'
+                    },
+                    legend: {
+                    data:['最高','最低']
+                    },
+                    toolbox: {
+                    show : true,
+                    feature : {
+                    mark : {show: true},
+                    dataView : {readOnly:false},
+                    magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                    }
+                    },
+                    calculable : true,
+                    dataZoom : {
+                    show : true,
+                    realtime : true,
+                    start : 40,
+                    end : 60
+                    },
+                    xAxis : [
+                    {
+                    type : 'category',
+                    boundaryGap : true,
+                    data : function (){
+                    var list = [];
+                    for (var i = 1; i <= 30; i++) {
+                    list.push('2013-03-' + i);
+                    }
+                    return list;
+                    }()
+                    }
+                    ],
+                    yAxis : [
+                    {
+                    type : 'value'
+                    }
+                    ],
+                    series : [
+                    {
+                    name:'最高',
+                    type:'line',
+                    data:function (){
+                    var list = [];
+                    for (var i = 1; i <= 30; i++) {
+                    list.push(Math.round(Math.random()* 30) + 30);
+                    }
+                    return list;
+                    }()
+                    },
+                    {
+                    name:'最低',
+                    type:'bar',
+                    data:function (){
+                    var list = [];
+                    for (var i = 1; i <= 30; i++) {
+                    list.push(Math.round(Math.random()* 10));
+                    }
+                    return list;
+                    }()
+                    }
+                    ]
+                    };
+                    var ecConfig = require('echarts/config');
+                    function eConsole(param) {
+                    var mes = '【' + param.type + '】';
+                    if (typeof param.seriesIndex != 'undefined') {
+                    mes += '  seriesIndex : ' + param.seriesIndex;
+                    mes += '  dataIndex : ' + param.dataIndex;
+                    }
+                    if (param.type == 'hover') {
+                    document.getElementById('hover-console').innerHTML = 'Event Console : ' + mes;
+                    }
+                    else {
+                    document.getElementById('console').innerHTML = mes;
+                    }
+                    console.log(param);
+                    }
+                    /*
+                    REFRESH: 'refresh',
+                    RESTORE: 'restore',
+                    RESIZE: 'resize',
+                    CLICK: 'click',
+                    HOVER: 'hover',
+                    MOUSEWHEEL: 'mousewheel',
+                    // -------业务交互逻辑
+                    DATA_CHANGED: 'dataChanged',
+                    DATA_ZOOM: 'dataZoom',
+                    DATA_RANGE: 'dataRange',
+                    LEGEND_SELECTED: 'legendSelected',
+                    MAP_SELECTED: 'mapSelected',
+                    PIE_SELECTED: 'pieSelected',
+                    MAGIC_TYPE_CHANGED: 'magicTypeChanged',
+                    DATA_VIEW_CHANGED: 'dataViewChanged',
+                    MAP_ROAM : 'mapRoam',
+                    */
+                    myChart.on(ecConfig.EVENT.CLICK, eConsole);
+                    //myChart.on(ecConfig.EVENT.HOVER, eConsole);
+                    myChart.on(ecConfig.EVENT.DATA_ZOOM, eConsole);
+                    myChart.on(ecConfig.EVENT.LEGEND_SELECTED, eConsole);
+                    myChart.on(ecConfig.EVENT.MAGIC_TYPE_CHANGED, eConsole);
+                    myChart.on(ecConfig.EVENT.DATA_VIEW_CHANGED, eConsole);
+                </textarea>
+            </div>
+        </div>
+        <!--chart-->
+        <div class="span11" id="graphic_other_7">
+            <div id="chartArea_other_7" class="chartArea">
+            </div>
+            <div style="margin-top: 10px;">
+                <button id="refreshChart_other_7" class="btn btn-success btnInfo">刷新</button><button id="editCoder_other_7" class="btn btn-success btnInfo">代码编辑</button><span class="text-info themeSpan">切换主题</span><select id="theme-select_other_7" class="themeSelector"></select>
+                <span id="wrong-message" style="color:red"></span>
+                <span id='hover-console' style="color:#1e90ff"></span>
+                <span id='console' style="color:#1e90ff">Event Console</span>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../js/chartEditor10.js"></script>
+<script type="text/javascript">
+
+    $(function(){
+        //dom
+        var other_7_code=document.getElementById('code_other_7');
+        var other_7_chartArea=document.getElementById("chartArea_other_7");
+        var other_7_chartNote=document.getElementById('chartNote_other_7');
+        var other_7_domCode = document.getElementById('sidebar-code_other_7');
+        var other_7_domGraphic = document.getElementById('graphic_other_7');
+        var other_7_domMain = document.getElementById('chartArea_other_7');
+        var other_7_iconResize = document.getElementById('icon-resize_other_7');
+        var other_7_codeEditor=document.getElementById('editCoder_other_7');
+        var other_7_themSelect=document.getElementById('theme-select_other_7');
+        var other_7_refrechart=document.getElementById('refreshChart_other_7');
+        //options
+        var other_7_options={dom:{}};
+        other_7_options.dom.chartArea=other_7_chartArea;
+        other_7_options.dom.code=other_7_code;
+        other_7_options.dom.domCode=other_7_domCode;
+        other_7_options.dom.chartNote=other_7_chartNote;
+        other_7_options.dom.domGraphic=other_7_domGraphic;
+        other_7_options.dom.domMain=other_7_domMain;
+        other_7_options.dom.iconResize=other_7_iconResize;
+        other_7_options.dom.codeEditor=other_7_codeEditor;
+        other_7_options.dom.themeSelect=other_7_themSelect;
+        other_7_options.dom.refreshChart=other_7_refrechart;
+        $("body").chartEditor10(other_7_options);
+    });
+</script>
+</body>
+</html>

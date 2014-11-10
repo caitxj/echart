@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>混搭</title>
+    <link href="../../css/codemirror.css" rel="stylesheet">
+    <link href="../../css/monokai.css" rel="stylesheet">
+    <link href="../../css/chart.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/esl.js"></script>
+    <script type="text/javascript" src="../../js/codemirror.js"></script>
+    <script type="text/javascript" src="../../js/javascript.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths:{
+                echarts:'../../js/echarts',
+                'echarts/chart/bar' : '../../js/echarts',
+                'echarts/chart/line': '../../js/echarts',
+                'echarts/chart/pie': '../../js/echarts',
+                'echarts/chart/scatter': '../../js/echarts',
+                'echarts/chart/map': '../../js/echarts-map',
+                'theme':'../../js/theme'
+            }
+        });
+    </script>
+</head>
+<body>
+<div id="chartNote_mix_7" class="container-fluid chartNoteheader">
+    <div class="row-fluid">
+        <div class="page-header hheader" contenteditable="true">
+            <span class="htitle">地图与饼图混搭<small>地图作为地域选择器</small></span>
+        </div>
+    </div>
+</div>
+<div id="char_main_mix_7" class="container-fluid">
+<div class="row-fluid">
+    <div id="sidebar-code_mix_7" class="span4" style="display: none;">
+        <div class="well sidebar-nav" style="height: 520px;">
+            <div class="nav-header"><a href="#" style="float: right;"  class="icon-resize-full"  id ="icon-resize_mix_7" ></a>option</div>
+            <textarea id="code_mix_7" name="code">
+                option = {
+                title : {
+                text: '2011全国GDP（亿元）',
+                subtext: '数据来自国家统计局'
+                },
+                tooltip : {
+                trigger: 'item'
+                },
+                legend: {
+                x:'right',
+                selectedMode:false,
+                data:['北京','上海','广东']
+                },
+                dataRange: {
+                orient: 'horizontal',
+                min: 0,
+                max: 55000,
+                text:['高','低'],           // 文本，默认为数值文本
+                splitNumber:0
+                },
+                toolbox: {
+                show : true,
+                orient: 'vertical',
+                x:'right',
+                y:'center',
+                feature : {
+                mark : {show: true},
+                dataView : {show: true, readOnly: false}
+                }
+                },
+                series : [
+                {
+                name: '2011全国GDP分布',
+                type: 'map',
+                mapType: 'china',
+                mapLocation: {
+                x: 'left'
+                },
+                selectedMode : 'multiple',
+                itemStyle:{
+                normal:{label:{show:true}},
+                emphasis:{label:{show:true}}
+                },
+                data:[
+                {name:'西藏', value:605.83},
+                {name:'青海', value:1670.44},
+                {name:'宁夏', value:2102.21},
+                {name:'海南', value:2522.66},
+                {name:'甘肃', value:5020.37},
+                {name:'贵州', value:5701.84},
+                {name:'新疆', value:6610.05},
+                {name:'云南', value:8893.12},
+                {name:'重庆', value:10011.37},
+                {name:'吉林', value:10568.83},
+                {name:'山西', value:11237.55},
+                {name:'天津', value:11307.28},
+                {name:'江西', value:11702.82},
+                {name:'广西', value:11720.87},
+                {name:'陕西', value:12512.3},
+                {name:'黑龙江', value:12582},
+                {name:'内蒙古', value:14359.88},
+                {name:'安徽', value:15300.65},
+                {name:'北京', value:16251.93, selected:true},
+                {name:'福建', value:17560.18},
+                {name:'上海', value:19195.69, selected:true},
+                {name:'湖北', value:19632.26},
+                {name:'湖南', value:19669.56},
+                {name:'四川', value:21026.68},
+                {name:'辽宁', value:22226.7},
+                {name:'河北', value:24515.76},
+                {name:'河南', value:26931.03},
+                {name:'浙江', value:32318.85},
+                {name:'山东', value:45361.85},
+                {name:'江苏', value:49110.27},
+                {name:'广东', value:53210.28, selected:true}
+                ]
+                },
+                {
+                name:'2011全国GDP对比',
+                type:'pie',
+                roseType : 'area',
+                tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                center: [document.getElementById('char_main_mix_7').offsetWidth - 250, 225],
+                radius: [30, 120],
+                data:[
+                {name: '北京', value: 16251.93},
+                {name: '上海', value: 19195.69},
+                {name: '广东', value: 53210.28}
+                ]
+                }
+                ],
+                animation: false
+                };
+                var ecConfig = require('echarts/config');
+                myChart.on(ecConfig.EVENT.MAP_SELECTED, function (param){
+                var selected = param.selected;
+                var mapSeries = option.series[0];
+                var data = [];
+                var legendData = [];
+                var name;
+                for (var p = 0, len = mapSeries.data.length; p < len; p++) {
+                name = mapSeries.data[p].name;
+                //mapSeries.data[p].selected = selected[name];
+                if (selected[name]) {
+                data.push({
+                name: name,
+                value: mapSeries.data[p].value
+                });
+                legendData.push(name);
+                }
+                }
+                option.legend.data = legendData;
+                option.series[1].data = data;
+                myChart.setOption(option, true);
+                })
+            </textarea>
+        </div>
+    </div>
+    <!--chart-->
+    <div class="span11" id="graphic_mix_7">
+        <div id="chartArea_mix_7" class="chartArea">
+        </div>
+        <div style="margin-top: 10px;">
+            <button id="refreshChart_mix_7" class="btn btn-success btnInfo">刷新</button><button id="editCoder_mix_7" class="btn btn-success btnInfo">代码编辑</button><span class="text-info themeSpan">切换主题</span><select id="theme-select_mix_7" class="themeSelector"></select>
+            <span id="wrong-message" style="color:red"></span>
+        </div>
+    </div>
+</div>
+</div>
+<script type="text/javascript" src="../../js/chartEditor10.js"></script>
+<script type="text/javascript">
+    $(function(){
+        //dom
+        var mix_7_code=document.getElementById('code_mix_7');
+        var mix_7_chartArea=document.getElementById("chartArea_mix_7");
+        var mix_7_chartNote=document.getElementById('chartNote_mix_7');
+        var mix_7_domCode = document.getElementById('sidebar-code_mix_7');
+        var mix_7_domGraphic = document.getElementById('graphic_mix_7');
+        var mix_7_domMain = document.getElementById('chartArea_mix_7');
+        var mix_7_iconResize = document.getElementById('icon-resize_mix_7');
+        var mix_7_codeEditor=document.getElementById('editCoder_mix_7');
+        var mix_7_themSelect=document.getElementById('theme-select_mix_7');
+        var mix_7_refrechart=document.getElementById('refreshChart_mix_7');
+        //options
+        var mix_7_options={dom:{}};
+        mix_7_options.dom.chartArea=mix_7_chartArea;
+        mix_7_options.dom.code=mix_7_code;
+        mix_7_options.dom.domCode=mix_7_domCode;
+        mix_7_options.dom.chartNote=mix_7_chartNote;
+        mix_7_options.dom.domGraphic=mix_7_domGraphic;
+        mix_7_options.dom.domMain=mix_7_domMain;
+        mix_7_options.dom.iconResize=mix_7_iconResize;
+        mix_7_options.dom.codeEditor=mix_7_codeEditor;
+        mix_7_options.dom.themeSelect=mix_7_themSelect;
+        mix_7_options.dom.refreshChart=mix_7_refrechart;
+        mix_7_options.needMap=true;
+        $("body").chartEditor10(mix_7_options);
+    });
+</script>
+</body>
+</html>

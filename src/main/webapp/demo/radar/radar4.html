@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>雷达图</title>
+    <link href="../../css/codemirror.css" rel="stylesheet">
+    <link href="../../css/monokai.css" rel="stylesheet">
+    <link href="../../css/chart.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/esl.js"></script>
+    <script type="text/javascript" src="../../js/codemirror.js"></script>
+    <script type="text/javascript" src="../../js/javascript.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths:{
+                echarts:'../../js/echarts',
+                'echarts/chart/bar' : '../../js/echarts',
+                'echarts/chart/line': '../../js/echarts',
+                'echarts/chart/pie': '../../js/echarts',
+                'echarts/chart/radar': '../../js/echarts',
+                'theme':'../../js/theme'
+            }
+        });
+    </script>
+</head>
+<body>
+<div id="chartNote_radar_4" class="container-fluid chartNoteheader">
+    <div class="row-fluid">
+        <div class="page-header hheader" contenteditable="true">
+            <span class="htitle">雷达图<small>多级控制,个性化线条,拐点,填充样式</small></span>
+        </div>
+    </div>
+</div>
+<div id="char_main" class="container-fluid">
+    <div class="row-fluid">
+        <div id="sidebar-code_radar_4" class="span4" style="display: none;">
+            <div class="well sidebar-nav" style="height: 520px;">
+                <div class="nav-header"><a href="#"  style="float: right;"  class="icon-resize-full"  id ="icon-resize_radar_4" ></a>option</div>
+                <textarea id="code_radar_4" name="code">
+                    option = {
+                    tooltip : {
+                    trigger: 'axis'
+                    },
+                    legend: {
+                    x : 'left',
+                    data:['图一','图二','图三']
+                    },
+                    toolbox: {
+                    show : true,
+                    feature : {
+                    mark : {show: true},
+                    dataView : {show: true, readOnly: false},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                    }
+                    },
+                    calculable: true,
+                    polar : [
+                    {
+                    indicator : [
+                    { text : '指标一' },
+                    { text : '指标二' },
+                    { text : '指标三' },
+                    { text : '指标四' },
+                    { text : '指标五' }
+                    ],
+                    center : ['25%',210],
+                    radius : 150,
+                    startAngle: 90,
+                    splitNumber: 8,
+                    name : {
+                    formatter:'【{value}】',
+                    textStyle: {color:'red'}
+                    },
+                    scale: true,
+                    precision: 1,
+                    //power: 100,
+                    type: 'circle',
+                    axisLine: {            // 坐标轴线
+                    show: true,        // 默认显示，属性show控制显示与否
+                    lineStyle: {       // 属性lineStyle控制线条样式
+                    color: 'green',
+                    width: 2,
+                    type: 'solid'
+                    }
+                    },
+                    axisLabel: {           // 坐标轴文本标签，详见axis.axisLabel
+                    show: false,
+                    // formatter: null,
+                    textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                    color: '#ccc'
+                    }
+                    },
+                    splitArea : {
+                    show : true,
+                    areaStyle : {
+                    color: ['rgba(250,0,250,0.3)','rgba(0,200,200,0.3)']
+                    }
+                    },
+                    splitLine : {
+                    show : true,
+                    lineStyle : {
+                    width : 2,
+                    color : 'yellow'
+                    }
+                    }
+                    },
+                    {
+                    indicator : [
+                    { text : '语文', max  : 150 },
+                    { text : '数学', max  : 150 },
+                    { text : '英语', max  : 150 },
+                    { text : '物理', max  : 120 },
+                    { text : '化学', max  : 108 },
+                    { text : '生物', max  : 72 }
+                    ],
+                    center : ['75%', 210],
+                    radius : 150
+                    }
+                    ],
+                    series : [
+                    {
+                    name: '雷达图',
+                    type: 'radar',
+                    itemStyle: {
+                    emphasis: {
+                    // color: 各异,
+                    lineStyle: {
+                    width: 4
+                    }
+                    }
+                    },
+                    data : [
+                    {
+                    value : [100, 8, 0.40, -80, 2000],
+                    name : '图一',
+                    symbol: 'star5',
+                    symbolSize: 4,           // 可计算特性参数，空数据拖拽提示图形大小
+                    itemStyle: {
+                    normal: {
+                    lineStyle: {
+                    type: 'dashed'
+                    }
+                    }
+                    }
+                    },
+                    {
+                    value : [10, 3, 0.20, -100, 1000],
+                    name : '图二',
+                    itemStyle: {
+                    normal: {
+                    areaStyle: {
+                    type: 'default'
+                    }
+                    }
+                    }
+                    },
+                    {
+                    value : [20, 3, 0.3, -13.5, 3000],
+                    name : '图三',
+                    symbol: 'none',         // 拐点图形类型，非标准参数
+                    itemStyle: {
+                    normal: {
+                    lineStyle: {
+                    type: 'dotted'
+                    }
+                    }
+                    }
+                    }
+                    ]
+                    },
+                    {
+                    name: '成绩单',
+                    type: 'radar',
+                    polarIndex : 1,
+                    itemStyle: {
+                    normal: {
+                    areaStyle: {
+                    type: 'default'
+                    }
+                    }
+                    },
+                    data : [
+                    {
+                    value : [120, 118, 130, 100, 99, 70],
+                    name : '张三',
+                    itemStyle: {
+                    normal: {
+                    color: function(seriesIndex, dataIndex, value) {
+                    return isNaN(value)
+                    ? undefined
+                    : (value >= 120 ? 'green' : 'red')
+                    },
+                    label: {
+                    show: true,
+                    formatter:function(seriesName, indicatorName, value) {
+                    return value;
+                    }
+                    },
+                    areaStyle: {
+                    color: (function (){
+                    var zrColor = require('zrender/tool/color');
+                    var x = document.getElementById('char_main').offsetWidth - 250;
+                    return zrColor.getRadialGradient(
+                    x, 210, 0, x, 200, 150,
+                    [[0, 'rgba(255,255,0,0.3)'],[1, 'rgba(255,0,0,0.5)']]
+                    )
+                    })()
+                    }
+                    }
+                    }
+                    },
+                    {
+                    value : [90, 113, 140, 30, 70, 60],
+                    name : '李四',
+                    itemStyle: {
+                    normal: {
+                    lineStyle: {
+                    type: 'dashed'
+                    }
+                    }
+                    }
+                    }
+                    ],
+                    markPoint : {
+                    symbol: 'emptyHeart',
+                    data : [
+                    {name : '打酱油的标注', value : 100, x:'50%', y:'15%', symbolSize:32}
+                    ]
+                    }
+                    }
+                    ]
+                    };
+                </textarea>
+            </div>
+        </div>
+        <!--chart-->
+        <div class="span11" id="graphic_radar_4">
+            <div id="chartArea_radar_4" class="chartArea">
+            </div>
+            <div style="margin-top: 10px;">
+                <button id="refreshChart_radar_4" class="btn btn-success btnInfo">刷新</button><button id="editCoder_radar_4" class="btn btn-success btnInfo">代码编辑</button><span class="text-info themeSpan">切换主题</span><select id="theme-select_radar_4" class="themeSelector"></select>
+                <span id="wrong-message" style="color:red"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../js/chartEditor10.js"></script>
+<script type="text/javascript">
+    $(function(){
+        //dom
+        var radar_4_code=document.getElementById('code_radar_4');
+        var radar_4_chartArea=document.getElementById("chartArea_radar_4");
+        var radar_4_chartNote=document.getElementById('chartNote_radar_4');
+        var radar_4_domCode = document.getElementById('sidebar-code_radar_4');
+        var radar_4_domGraphic = document.getElementById('graphic_radar_4');
+        var radar_4_domMain = document.getElementById('chartArea_radar_4');
+        var radar_4_iconResize = document.getElementById('icon-resize_radar_4');
+        var radar_4_codeEditor=document.getElementById('editCoder_radar_4');
+        var radar_4_themSelect=document.getElementById('theme-select_radar_4');
+        var radar_4_refrechart=document.getElementById('refreshChart_radar_4');
+        //options
+        var radar_4_options={dom:{}};
+        radar_4_options.dom.chartArea=radar_4_chartArea;
+        radar_4_options.dom.code=radar_4_code;
+        radar_4_options.dom.domCode=radar_4_domCode;
+        radar_4_options.dom.chartNote=radar_4_chartNote;
+        radar_4_options.dom.domGraphic=radar_4_domGraphic;
+        radar_4_options.dom.domMain=radar_4_domMain;
+        radar_4_options.dom.iconResize=radar_4_iconResize;
+        radar_4_options.dom.codeEditor=radar_4_codeEditor;
+        radar_4_options.dom.themeSelect=radar_4_themSelect;
+        radar_4_options.dom.refreshChart=radar_4_refrechart;
+        $("body").chartEditor10(radar_4_options);
+    });
+</script>
+</body>
+</html>

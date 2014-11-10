@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>力导向分布图</title>
+    <link href="../../css/codemirror.css" rel="stylesheet">
+    <link href="../../css/monokai.css" rel="stylesheet">
+    <link href="../../css/chart.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/esl.js"></script>
+    <script type="text/javascript" src="../../js/codemirror.js"></script>
+    <script type="text/javascript" src="../../js/javascript.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths:{
+                echarts:'../../js/echarts',
+                'echarts/chart/bar' : '../../js/echarts',
+                'echarts/chart/line': '../../js/echarts',
+                'echarts/chart/pie': '../../js/echarts',
+                'echarts/chart/force': '../../js/echarts',
+                'theme':'../../js/theme'
+            }
+        });
+    </script>
+</head>
+<body>
+<div id="chartNote_force_3" class="container-fluid chartNoteheader">
+    <div class="row-fluid">
+        <div class="page-header hheader" contenteditable="true">
+            <span class="htitle">树状关系网络<small>数据格式</small></span>
+        </div>
+    </div>
+</div>
+<div id="char_main_force_3" class="container-fluid">
+    <div class="row-fluid">
+        <div id="sidebar-code_force_3" class="span4" style="display: none;">
+            <div class="well sidebar-nav" style="height: 520px;">
+                <div class="nav-header"><a href="#" style="float: right;"  class="icon-resize-full"  id ="icon-resize_force_3" ></a>option</div>
+                <textarea id="code_force_3" name="code">
+
+                    var nodes = [];
+                    var links = [];
+                    var constMaxDepth = 4;
+                    var constMaxChildren = 3;
+                    var constMinChildren = 2;
+                    var constMaxRadius = 10;
+                    var constMinRadius = 2;
+                    var mainDom = document.getElementById('char_main_force_3');
+
+                    function rangeRandom(min, max) {
+                    return Math.random() * (max - min) + min;
+                    }
+
+                    function createRandomNode(depth) {
+                    var x = mainDom.clientWidth / 2 + (.5 - Math.random()) * 200;
+                    var y = (mainDom.clientHeight - 20) * depth / (constMaxDepth + 1) + 20;
+                    var node = {
+                    name : 'NODE_' + nodes.length,
+                    value : rangeRandom(constMinRadius, constMaxRadius),
+                    // Custom properties
+                    id : nodes.length,
+                    depth : depth,
+                    initial : [x, y],
+                    fixY : true,
+                    category : depth === constMaxDepth ? 0 : 1
+                    }
+                    nodes.push(node);
+
+                    return node;
+                    }
+
+                    function forceMockThreeData() {
+                    var depth = 0;
+
+                    var rootNode = createRandomNode(0);
+                    rootNode.name = 'ROOT';
+                    rootNode.category = 2;
+
+                    function mock(parentNode, depth) {
+                    var nChildren = Math.round(rangeRandom(constMinChildren, constMaxChildren));
+
+                    for (var i = 0; i < nChildren; i++) {
+                    var childNode = createRandomNode(depth);
+                    links.push({
+                    source : parentNode.id,
+                    target : childNode.id,
+                    weight : 1
+                    });
+                    if (depth < constMaxDepth) {
+                    mock(childNode, depth + 1);
+                    }
+                    }
+                    }
+
+                    mock(rootNode, 1);
+                    }
+
+                    forceMockThreeData();
+
+                    option = {
+                    title : {
+                    text: 'Force',
+                    subtext: 'Force-directed tree',
+                    x:'right',
+                    y:'bottom'
+                    },
+                    tooltip : {
+                    trigger: 'item',
+                    formatter: '{a} : {b}'
+                    },
+                    toolbox: {
+                    show : true,
+                    feature : {
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                    }
+                    },
+                    legend: {
+                    x: 'left',
+                    data:['叶子节点','非叶子节点', '根节点']
+                    },
+                    series : [
+                    {
+                    type:'force',
+                    name : "Force tree",
+                    categories : [
+                    {
+                    name: '叶子节点',
+                    itemStyle: {
+                    normal: {
+                    color : '#ff7f50'
+                    }
+                    }
+                    },
+                    {
+                    name: '非叶子节点',
+                    itemStyle: {
+                    normal: {
+                    color : '#6f57bc'
+                    }
+                    }
+                    },
+                    {
+                    name: '根节点',
+                    itemStyle: {
+                    normal: {
+                    color : '#af0000'
+                    }
+                    }
+                    }
+                    ],
+                    itemStyle: {
+                    normal: {
+                    label: {
+                    show: false
+                    },
+                    nodeStyle : {
+                    brushType : 'both',
+                    strokeColor : 'rgba(255,215,0,0.6)',
+                    lineWidth : 1
+                    }
+                    }
+                    },
+                    minRadius : constMinRadius,
+                    maxRadius : constMaxRadius,
+                    nodes : nodes,
+                    links : links
+                    }
+                    ]
+                    };
+                </textarea>
+            </div>
+        </div>
+        <!--chart-->
+        <div class="span11" id="graphic_force_3">
+            <div id="chartArea_force_3" class="chartArea">
+            </div>
+            <div style="margin-top: 10px;">
+                <button id="refreshChart_force_3" class="btn btn-success btnInfo">刷新</button><button id="editCoder_force_3" class="btn btn-success btnInfo">代码编辑</button><span class="text-info themeSpan">切换主题</span><select id="theme-select_force_3" class="themeSelector"></select>
+                <span id="wrong-message" style="color:red"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../js/chartEditor10.js"></script>
+<script type="text/javascript">
+    $(function(){
+        //dom
+        var force_3_code=document.getElementById('code_force_3');
+        var force_3_chartArea=document.getElementById("chartArea_force_3");
+        var force_3_chartNote=document.getElementById('chartNote_force_3');
+        var force_3_domCode = document.getElementById('sidebar-code_force_3');
+        var force_3_domGraphic = document.getElementById('graphic_force_3');
+        var force_3_domMain = document.getElementById('chartArea_force_3');
+        var force_3_iconResize = document.getElementById('icon-resize_force_3');
+        var force_3_codeEditor=document.getElementById('editCoder_force_3');
+        var force_3_themSelect=document.getElementById('theme-select_force_3');
+        var force_3_refrechart=document.getElementById('refreshChart_force_3');
+        //options
+        var force_3_options={dom:{}};
+        force_3_options.dom.chartArea=force_3_chartArea;
+        force_3_options.dom.code=force_3_code;
+        force_3_options.dom.domCode=force_3_domCode;
+        force_3_options.dom.chartNote=force_3_chartNote;
+        force_3_options.dom.domGraphic=force_3_domGraphic;
+        force_3_options.dom.domMain=force_3_domMain;
+        force_3_options.dom.iconResize=force_3_iconResize;
+        force_3_options.dom.codeEditor=force_3_codeEditor;
+        force_3_options.dom.themeSelect=force_3_themSelect;
+        force_3_options.dom.refreshChart=force_3_refrechart;
+        $("body").chartEditor10(force_3_options);
+    });
+</script>
+</body>
+</html>

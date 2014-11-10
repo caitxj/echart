@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>柱状图</title>
+    <link href="../../css/codemirror.css" rel="stylesheet">
+    <link href="../../css/monokai.css" rel="stylesheet">
+    <link href="../../css/chart.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/esl.js"></script>
+    <script type="text/javascript" src="../../js/codemirror.js"></script>
+    <script type="text/javascript" src="../../js/javascript.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths:{
+                echarts:'../../js/echarts',
+                'echarts/chart/bar' : '../../js/echarts',
+                'echarts/chart/line': '../../js/echarts',
+                'echarts/chart/pie': '../../js/echarts',
+                'theme':'../../js/theme'
+            }
+        });
+    </script>
+</head>
+<body>
+<div id="chartNote_bar_1" class="container-fluid chartNoteheader">
+    <div class="row-fluid">
+        <div class="page-header hheader" contenteditable="true">
+            <span class="htitle">标准柱状图<small>标注,标线</small></span>
+        </div>
+    </div>
+</div>
+<div id="char_main" class="container-fluid">
+    <div class="row-fluid">
+        <div id="sidebar-code_bar_1" class="span4" style="display: none;">
+            <div class="well sidebar-nav" style="height: 520px;">
+                <div class="nav-header"><a href="#"  style="float: right;"  class="icon-resize-full"  id ="icon-resize_bar_1" ></a>option</div>
+                <textarea id="code_bar_1" name="code">
+                    option = {
+                    title : {
+                    text: '某地区蒸发量和降水量',
+                    subtext: '纯属虚构'
+                    },
+                    tooltip : {
+                    trigger: 'axis'
+                    },
+                    legend: {
+                    data:['蒸发量','降水量']
+                    },
+                    toolbox: {
+                    show : true,
+                    feature : {
+                    mark : {show: true},
+                    dataView : {show: true, readOnly: false},
+                    magicType : {show: true, type: ['line', 'bar']},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                    }
+                    },
+                    calculable : true,
+                    xAxis : [
+                    {
+                    type : 'category',
+                    data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+                    }
+                    ],
+                    yAxis : [
+                    {
+                    type : 'value'
+                    }
+                    ],
+                    series : [
+                    {
+                    name:'蒸发量',
+                    type:'bar',
+                    data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
+                    markPoint : {
+                    data : [
+                    {type : 'max', name: '最大值'},
+                    {type : 'min', name: '最小值'}
+                    ]
+                    },
+                    markLine : {
+                    data : [
+                    {type : 'average', name: '平均值'}
+                    ]
+                    }
+                    },
+                    {
+                    name:'降水量',
+                    type:'bar',
+                    data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
+                    markPoint : {
+                    data : [
+                    {name : '年最高', value : 182.2, xAxis: 7, yAxis: 183, symbolSize:18},
+                    {name : '年最低', value : 2.3, xAxis: 11, yAxis: 3}
+                    ]
+                    },
+                    markLine : {
+                    data : [
+                    {type : 'average', name : '平均值'}
+                    ]
+                    }
+                    }
+                    ]
+                    };
+                </textarea>
+            </div>
+        </div>
+        <!--chart-->
+        <div class="span11" id="graphic_bar_1">
+            <div id="chartArea_bar_1" class="chartArea">
+            </div>
+            <div style="margin-top: 10px;">
+                <button id="refreshChart_bar_1" class="btn btn-success btnInfo">刷新</button><button id="editCoder_bar_1" class="btn btn-success btnInfo">代码编辑</button><span class="text-info themeSpan">切换主题</span><select id="theme-select_bar_1" class="themeSelector"></select>
+                <span id="wrong-message" style="color:red"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../js/chartEditor10.js"></script>
+<script type="text/javascript">
+    $(function(){
+        //dom
+        var bar_1_code=document.getElementById('code_bar_1');
+        var bar_1_chartArea=document.getElementById("chartArea_bar_1");
+        var bar_1_chartNote=document.getElementById('chartNote_bar_1');
+        var bar_1_domCode = document.getElementById('sidebar-code_bar_1');
+        var bar_1_domGraphic = document.getElementById('graphic_bar_1');
+        var bar_1_domMain = document.getElementById('chartArea_bar_1');
+        var bar_1_iconResize = document.getElementById('icon-resize_bar_1');
+        var bar_1_codeEditor=document.getElementById('editCoder_bar_1');
+        var bar_1_themSelect=document.getElementById('theme-select_bar_1');
+        var bar_1_refrechart=document.getElementById('refreshChart_bar_1');
+        //options
+        var bar_1_options={dom:{}};
+        bar_1_options.dom.chartArea=bar_1_chartArea;
+        bar_1_options.dom.code=bar_1_code;
+        bar_1_options.dom.domCode=bar_1_domCode;
+        bar_1_options.dom.chartNote=bar_1_chartNote;
+        bar_1_options.dom.domGraphic=bar_1_domGraphic;
+        bar_1_options.dom.domMain=bar_1_domMain;
+        bar_1_options.dom.iconResize=bar_1_iconResize;
+        bar_1_options.dom.codeEditor=bar_1_codeEditor;
+        bar_1_options.dom.themeSelect=bar_1_themSelect;
+        bar_1_options.dom.refreshChart=bar_1_refrechart;
+        $("body").chartEditor10(bar_1_options);
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="../../css/codemirror.css" rel="stylesheet">
+    <link href="../../css/theme/paraiso-dark.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/codemirror.js"></script>
+    <script type="text/javascript" src="../../js/javascript.js"></script>
+</head>
+<body>
+<button id="show">show</button>
+<div id="tt" style="display: none">
+    <textarea id="code" cols="10" rows="10">
+        function findSequence(goal) {
+        function find(start, history) {
+        if (start == goal)
+        return history;
+        else if (start > goal)
+        return null;
+        else
+        return find(start + 5, "(" + history + " + 5)") ||
+        find(start * 3, "(" + history + " * 3)");
+        }
+        return find(1, "1");
+    </textarea>
+</div>
+<script type="text/javascript">
+    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+        lineNumbers: true
+    });
+    editor.setOption("theme", "paraiso-dark");
+    document.getElementById("show").onclick=function(){
+        setTimeout(function(){
+            editor.refresh();
+        },500);
+        document.getElementById("tt").style.display="block";
+    }
+</script>
+</body>
+</html>

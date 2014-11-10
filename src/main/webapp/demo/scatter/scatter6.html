@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>散点图</title>
+    <link href="../../css/codemirror.css" rel="stylesheet">
+    <link href="../../css/monokai.css" rel="stylesheet">
+    <link href="../../css/chart.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/esl.js"></script>
+    <script type="text/javascript" src="../../js/codemirror.js"></script>
+    <script type="text/javascript" src="../../js/javascript.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths:{
+                echarts:'../../js/echarts',
+                'echarts/chart/bar' : '../../js/echarts',
+                'echarts/chart/line': '../../js/echarts',
+                'echarts/chart/pie': '../../js/echarts',
+                'echarts/chart/scatter': '../../js/echarts',
+                'theme':'../../js/theme'
+            }
+        });
+    </script>
+</head>
+<body>
+<div id="chartNote_scatter_6" class="container-fluid chartNoteheader">
+    <div class="row-fluid">
+        <div class="page-header hheader" contenteditable="true">
+            <span class="htitle">散点图<small>多级控制,个性化图形样式,大小等</small></span>
+        </div>
+    </div>
+</div>
+<div id="char_main" class="container-fluid">
+    <div class="row-fluid">
+        <div id="sidebar-code_scatter_6" class="span4" style="display: none;">
+            <div class="well sidebar-nav" style="height: 520px;">
+                <div class="nav-header"><a href="#"  style="float: right;"  class="icon-resize-full"  id ="icon-resize_scatter_6" ></a>option</div>
+                <textarea id="code_scatter_6" name="code">
+                    option = {
+                    tooltip : {
+                    trigger: 'item'
+                    },
+                    legend: {
+                    data:['scatter1','scatter2']
+                    },
+                    toolbox: {
+                    show : true,
+                    feature : {
+                    mark : {show: true},
+                    dataView : {show: true, readOnly: false},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                    }
+                    },
+                    calculable : true,
+                    xAxis : [
+                    {
+                    type : 'value'
+                    }
+                    ],
+                    yAxis : [
+                    {
+                    type : 'value'
+                    }
+                    ],
+                    series : [
+                    {
+                    name:'scatter1',
+                    type:'scatter',
+                    symbol: 'emptyCircle', //'circle', 'rectangle', 'triangle', 'diamond', 'emptyCircle', 'emptyRectangle', 'emptyTriangle', 'emptyDiamond'
+                    symbolSize: function (value){
+                    if (value[0] < 2) {
+                    return 2;
+                    }
+                    else if (value[0] < 8) {
+                    return Math.round(value[2] * 3);
+                    }
+                    else {
+                    return 20;
+                    }
+                    },
+                    itemStyle: {
+                    normal: {
+                    color: 'lightblue',
+                    borderWidth: 4,
+                    label : {show: true}
+                    },
+                    emphasis: {
+                    color: 'lightgreen',
+                    }
+                    },
+                    data: (function () {
+                    var d = [];
+                    var len = 20;
+                    while (len--) {
+                    d.push([
+                    (Math.random()*10).toFixed(2) - 0,
+                    (Math.random()*10).toFixed(2) - 0,
+                    (Math.random()*10).toFixed(2) - 0
+                    ]);
+                    }
+                    return d;
+                    })(),
+                    markPoint : {
+                    data : [
+                    {type : 'max', name: 'y最大值'},
+                    {type : 'min', name: 'y最小值'},
+                    {type : 'max', name: 'x最大值', valueIndex : 0, symbol:'arrow',itemStyle:{normal:{borderColor:'red'}}},
+                    {type : 'min', name: 'x最小值', valueIndex : 0, symbol:'arrow',itemStyle:{normal:{borderColor:'red'}}}
+                    ]
+                    },
+                    markLine : {
+                    data : [
+                    {type : 'average', name: 'y平均值'},
+                    {type : 'average', name: 'x平均值', valueIndex : 0, itemStyle:{normal:{borderColor:'red'}}}
+                    ]
+                    }
+                    },
+                    {
+                    name:'scatter2',
+                    type:'scatter',
+                    symbol: 'image://../asset/ico/favicon.png',     // 系列级个性化拐点图形
+                    symbolSize: function (value){
+                    return Math.round(value[2] * 3);
+                    },
+                    itemStyle: {
+                    emphasis : {
+                    label : {show: true}
+                    }
+                    },
+                    data: (function () {
+                    var d = [];
+                    var len = 20;
+                    while (len--) {
+                    d.push([
+                    (Math.random()*10).toFixed(2) - 0,
+                    (Math.random()*10).toFixed(2) - 0,
+                    (Math.random()*10).toFixed(2) - 0
+                    ]);
+                    }
+                    d.push({
+                    value : [5,5,1000],
+                    itemStyle: {
+                    normal: {
+                    borderWidth: 8,
+                    color: 'orange'
+                    },
+                    emphasis: {
+                    borderWidth: 10,
+                    color: '#ff4500'
+                    }
+                    },
+                    symbol: 'emptyTriangle',
+                    symbolRotate:90,
+                    symbolSize:30
+                    })
+                    return d;
+                    })(),
+                    markPoint : {
+                    symbol: 'emptyCircle',
+                    itemStyle:{
+                    normal:{label:{position:'top'}}
+                    },
+                    data : [
+                    {name : '有个东西', value : 1000, xAxis: 5, yAxis: 5, symbolSize:80}
+                    ]
+                    }
+                    }
+                    ]
+                    };
+                </textarea>
+            </div>
+        </div>
+        <!--chart-->
+        <div class="span11" id="graphic_scatter_6">
+            <div id="chartArea_scatter_6" class="chartArea">
+            </div>
+            <div style="margin-top: 10px;">
+                <button id="refreshChart_scatter_6" class="btn btn-success btnInfo">刷新</button><button id="editCoder_scatter_6" class="btn btn-success btnInfo">代码编辑</button><span class="text-info themeSpan">切换主题</span><select id="theme-select_scatter_6" class="themeSelector"></select>
+                <span id="wrong-message" style="color:red"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../js/chartEditor10.js"></script>
+<script type="text/javascript">
+    $(function(){
+        //dom
+        var scatter_6_code=document.getElementById('code_scatter_6');
+        var scatter_6_chartArea=document.getElementById("chartArea_scatter_6");
+        var scatter_6_chartNote=document.getElementById('chartNote_scatter_6');
+        var scatter_6_domCode = document.getElementById('sidebar-code_scatter_6');
+        var scatter_6_domGraphic = document.getElementById('graphic_scatter_6');
+        var scatter_6_domMain = document.getElementById('chartArea_scatter_6');
+        var scatter_6_iconResize = document.getElementById('icon-resize_scatter_6');
+        var scatter_6_codeEditor=document.getElementById('editCoder_scatter_6');
+        var scatter_6_themSelect=document.getElementById('theme-select_scatter_6');
+        var scatter_6_refrechart=document.getElementById('refreshChart_scatter_6');
+        //options
+        var scatter_6_options={dom:{}};
+        scatter_6_options.dom.chartArea=scatter_6_chartArea;
+        scatter_6_options.dom.code=scatter_6_code;
+        scatter_6_options.dom.domCode=scatter_6_domCode;
+        scatter_6_options.dom.chartNote=scatter_6_chartNote;
+        scatter_6_options.dom.domGraphic=scatter_6_domGraphic;
+        scatter_6_options.dom.domMain=scatter_6_domMain;
+        scatter_6_options.dom.iconResize=scatter_6_iconResize;
+        scatter_6_options.dom.codeEditor=scatter_6_codeEditor;
+        scatter_6_options.dom.themeSelect=scatter_6_themSelect;
+        scatter_6_options.dom.refreshChart=scatter_6_refrechart;
+        $("body").chartEditor10(scatter_6_options);
+    });
+</script>
+</body>
+</html>

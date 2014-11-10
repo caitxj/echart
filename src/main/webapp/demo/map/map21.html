@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>地图</title>
+    <link href="../../css/codemirror.css" rel="stylesheet">
+    <link href="../../css/monokai.css" rel="stylesheet">
+    <link href="../../css/chart.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/esl.js"></script>
+    <script type="text/javascript" src="../../js/codemirror.js"></script>
+    <script type="text/javascript" src="../../js/javascript.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths:{
+                echarts:'../../js/echarts',
+                'echarts/chart/bar' : '../../js/echarts',
+                'echarts/chart/line': '../../js/echarts',
+                'echarts/chart/pie': '../../js/echarts',
+                'echarts/chart/map': '../../js/echarts-map',
+                'theme':'../../js/theme'
+            }
+        });
+    </script>
+</head>
+<body>
+<div id="chartNote_map_21" class="container-fluid chartNoteheader">
+    <div class="row-fluid">
+        <div class="page-header hheader" contenteditable="true">
+            <span class="htitle">地图<small>多级控制,个性化填充,标签文本,线条样式等</small></span>
+        </div>
+    </div>
+</div>
+<div id="char_main_map_21" class="container-fluid">
+    <div class="row-fluid">
+        <div id="sidebar-code_map_21" class="span4" style="display: none;">
+            <div class="well sidebar-nav" style="height: 520px;">
+                <div class="nav-header"><a href="#" style="float: right;"  class="icon-resize-full"  id ="icon-resize_map_21" ></a>option</div>
+                <textarea id="code_map_21" name="code">
+                    option = {
+                    series : [
+                    {
+                    name: 'Map',
+                    type: 'map',
+                    mapLocation: {
+                    x : 'left',
+                    y : 'top',
+                    height : 500
+                    },
+                    selectedMode: 'multiple',
+                    itemStyle: {
+                    normal: {
+                    borderWidth:2,
+                    borderColor:'lightgreen',
+                    color: 'orange',
+                    label: {
+                    show: false
+                    }
+                    },
+                    emphasis: {                 // 也是选中样式
+                    borderWidth:2,
+                    borderColor:'#fff',
+                    color: '#32cd32',
+                    label: {
+                    show: true,
+                    textStyle: {
+                    color: '#fff'
+                    }
+                    }
+                    }
+                    },
+                    data:[
+                    {
+                    name: '广东',
+                    value: Math.round(Math.random()*1000),
+                    itemStyle: {
+                    normal: {
+                    color: '#32cd32',
+                    label: {
+                    show: true,
+                    textStyle: {
+                    color: '#fff',
+                    fontSize: 15
+                    }
+                    }
+                    },
+                    emphasis: {                 // 也是选中样式
+                    borderWidth:5,
+                    borderColor:'yellow',
+                    color: '#cd5c5c',
+                    label: {
+                    show: false,
+                    textStyle: {
+                    color: 'blue'
+                    }
+                    }
+                    }
+                    }
+                    }
+                    ],
+                    markPoint : {
+                    itemStyle : {
+                    normal:{
+                    color:'skyblue'
+                    }
+                    },
+                    data : [
+                    {name : '天津', value : 350},
+                    {name : '上海', value : 103}
+                    ]
+                    },
+                    geoCoord: {
+                    '上海': [121.4648,31.2891],
+                    '天津': [117.4219,39.4189]
+                    }
+                    }
+                    ]
+                    };
+                </textarea>
+            </div>
+        </div>
+        <!--chart-->
+        <div class="span11" id="graphic_map_21">
+            <div id="chartArea_map_21" class="chartArea">
+            </div>
+            <div style="margin-top: 10px;">
+                <button id="refreshChart_map_21" class="btn btn-success btnInfo">刷新</button><button id="editCoder_map_21" class="btn btn-success btnInfo">代码编辑</button><span class="text-info themeSpan">切换主题</span><select id="theme-select_map_21" class="themeSelector"></select>
+                <span id="wrong-message" style="color:red"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../js/chartEditor10.js"></script>
+<script type="text/javascript">
+    $(function() {
+        //dom
+        var map_21_code = document.getElementById('code_map_21');
+        var map_21_chartArea = document.getElementById("chartArea_map_21");
+        var map_21_chartNote = document.getElementById('chartNote_map_21');
+        var map_21_domCode = document.getElementById('sidebar-code_map_21');
+        var map_21_domGraphic = document.getElementById('graphic_map_21');
+        var map_21_domMain = document.getElementById('chartArea_map_21');
+        var map_21_iconResize = document.getElementById('icon-resize_map_21');
+        var map_21_codeEditor = document.getElementById('editCoder_map_21');
+        var map_21_themSelect = document.getElementById('theme-select_map_21');
+        var map_21_refrechart = document.getElementById('refreshChart_map_21');
+        //options
+        var map_21_options = {dom: {}};
+        map_21_options.dom.chartArea = map_21_chartArea;
+        map_21_options.dom.code = map_21_code;
+        map_21_options.dom.domCode = map_21_domCode;
+        map_21_options.dom.chartNote = map_21_chartNote;
+        map_21_options.dom.domGraphic = map_21_domGraphic;
+        map_21_options.dom.domMain = map_21_domMain;
+        map_21_options.dom.iconResize = map_21_iconResize;
+        map_21_options.dom.codeEditor = map_21_codeEditor;
+        map_21_options.dom.themeSelect = map_21_themSelect;
+        map_21_options.dom.refreshChart = map_21_refrechart;
+        $("body").chartEditor10(map_21_options);
+    });
+</script>
+</body>
+</html>

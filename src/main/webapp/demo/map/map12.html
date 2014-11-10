@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>地图</title>
+    <link href="../../css/codemirror.css" rel="stylesheet">
+    <link href="../../css/monokai.css" rel="stylesheet">
+    <link href="../../css/chart.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/esl.js"></script>
+    <script type="text/javascript" src="../../js/codemirror.js"></script>
+    <script type="text/javascript" src="../../js/javascript.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths:{
+                echarts:'../../js/echarts',
+                'echarts/chart/bar' : '../../js/echarts',
+                'echarts/chart/line': '../../js/echarts',
+                'echarts/chart/pie': '../../js/echarts',
+                'echarts/chart/map': '../../js/echarts-map',
+                'theme':'../../js/theme'
+            }
+        });
+    </script>
+</head>
+<body>
+<div id="chartNote_map_12" class="container-fluid chartNoteheader">
+    <div class="row-fluid">
+        <div class="page-header hheader" contenteditable="true">
+            <span class="htitle">子区域模式<small>子区域模式使用,值域漫游</small></span>
+        </div>
+    </div>
+</div>
+<div id="char_main_map_12" class="container-fluid">
+    <div class="row-fluid">
+        <div id="sidebar-code_map_12" class="span4" style="display: none;">
+            <div class="well sidebar-nav" style="height: 520px;">
+                <div class="nav-header"><a href="#" style="float: right;"  class="icon-resize-full"  id ="icon-resize_map_12" ></a>option</div>
+                <textarea id="code_map_12" name="code">
+                    var itemStyle = {
+                    normal:{label:{
+                    show:true,
+                    formatter:'{b}',
+                    textStyle: {fontSize: 20,fontWeight : 'bold'}
+                    }},
+                    emphasis:{label:{show:true}}
+                    };
+                    option = {
+                    title : {
+                    text : '2012 World GDP Top 8',
+                    subtext : 'from baike （Billion $）',
+                    sublink : 'http://baike.baidu.com/link?url=MyQikkoGI08hUfVmiB0g01ZJ6Wpyu18s8e6XdA3dwcI73-i0J7Ce32LuPNqfEWBj2rUcSfIHYIVI0aL8czbS_a',
+                    x : 'center'
+                    },
+                    tooltip : {
+                    trigger: 'item',
+                    showDelay: 0,
+                    transitionDuration: 0.2,
+                    formatter : function (a) {
+                    var sName = a[0];
+                    var value = a[2] + '';
+                    value = value.replace(/(\d{1,3})(?=(?:\d{3})+(?!\d))/g, '$1,');
+                    return sName + '<br/>' + value + ' Billion';
+                    }
+                    },
+                    toolbox: {
+                    show : true,
+                    x: 'right',
+                    y: 'bottom',
+                    feature : {
+                    mark : {show: true},
+                    dataView : {show: true, readOnly: false},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                    }
+                    },
+                    dataRange: {
+                    orient: 'horizontal',
+                    x : 'center',
+                    y: 'center',
+                    min: 2000,
+                    max: 16000,
+                    splitNumber: 0,            // 分割段数，默认为5
+                    text:['16,000B','2,000B'],
+                    calculable : true,
+                    itemWidth:40,
+                    color: ['orangered','yellow','lightskyblue']
+                    },
+                    series : [
+                    {
+                    name: 'USA',
+                    type: 'map',
+                    mapType: 'world|United States of America',
+                    mapLocation: {x:'5%', y:'10%',width:'22%',height:'35%'},
+                    itemStyle: itemStyle,
+                    data:[
+                    {name : 'United States of America', value : 15684.7}
+                    ]
+                    },
+                    {
+                    name: 'China',
+                    type: 'map',
+                    mapType: 'world|China',
+                    mapLocation: {x:'30%', y:'10%',width:'22%',height:'35%'},
+                    itemStyle: itemStyle,
+                    itemStyle: itemStyle,
+                    data:[
+                    {name : 'China', value : 8227}
+                    ]
+                    },
+                    {
+                    name: 'Japan',
+                    type: 'map',
+                    mapType: 'world|Japan',
+                    mapLocation: {x:'55%', y:'10%',width:'22%',height:'35%'},
+                    itemStyle: itemStyle,
+                    data:[
+                    {name : 'Japan', value : 5963.9}
+                    ]
+                    },
+                    {
+                    name: 'Germany',
+                    type: 'map',
+                    mapType: 'world|Germany',
+                    mapLocation: {x:'76%', y:'10%',width:'22%',height:'35%'},
+                    itemStyle: itemStyle,
+                    data:[
+                    {name : 'Germany', value : 3400.5}
+                    ]
+                    },
+                    {
+                    name: 'France',
+                    type: 'map',
+                    mapType: 'world|France',
+                    mapLocation: {x:'5%', y:'60%',width:'22%',height:'35%'},
+                    itemStyle: itemStyle,
+                    data:[
+                    {name : 'France', value : 2608.6}
+                    ]
+                    },
+                    {
+                    name: 'United Kingdom',
+                    type: 'map',
+                    mapType: 'world|United Kingdom',
+                    mapLocation: {x:'33%', y:'60%',width:'22%',height:'35%'},
+                    itemStyle: itemStyle,
+                    data:[
+                    {name : 'United Kingdom', value : 2440.5}
+                    ]
+                    },
+                    {
+                    name: 'Brazil',
+                    type: 'map',
+                    mapType: 'world|Brazil',
+                    mapLocation: {x:'55%', y:'60%',width:'22%',height:'35%'},
+                    itemStyle: itemStyle,
+                    data:[
+                    {name : 'Brazil', value : 2395.9}
+                    ]
+                    },
+                    {
+                    name: 'Russia',
+                    type: 'map',
+                    mapType: 'world|Russia',
+                    mapLocation: {x:'76%', y:'70%',width:'22%',height:'35%'},
+                    itemStyle: itemStyle,
+                    data:[
+                    {name : 'Russia', value : 2021.9}
+                    ]
+                    }
+                    ]
+                    };
+                </textarea>
+            </div>
+        </div>
+        <!--chart-->
+        <div class="span11" id="graphic_map_12">
+            <div id="chartArea_map_12" class="chartArea">
+            </div>
+            <div style="margin-top: 10px;">
+                <button id="refreshChart_map_12" class="btn btn-success btnInfo">刷新</button><button id="editCoder_map_12" class="btn btn-success btnInfo">代码编辑</button><span class="text-info themeSpan">切换主题</span><select id="theme-select_map_12" class="themeSelector"></select>
+                <span id="wrong-message" style="color:red"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../js/chartEditor10.js"></script>
+<script type="text/javascript">
+    $(function() {
+        //dom
+        var map_12_code = document.getElementById('code_map_12');
+        var map_12_chartArea = document.getElementById("chartArea_map_12");
+        var map_12_chartNote = document.getElementById('chartNote_map_12');
+        var map_12_domCode = document.getElementById('sidebar-code_map_12');
+        var map_12_domGraphic = document.getElementById('graphic_map_12');
+        var map_12_domMain = document.getElementById('chartArea_map_12');
+        var map_12_iconResize = document.getElementById('icon-resize_map_12');
+        var map_12_codeEditor = document.getElementById('editCoder_map_12');
+        var map_12_themSelect = document.getElementById('theme-select_map_12');
+        var map_12_refrechart = document.getElementById('refreshChart_map_12');
+        //options
+        var map_12_options = {dom: {}};
+        map_12_options.dom.chartArea = map_12_chartArea;
+        map_12_options.dom.code = map_12_code;
+        map_12_options.dom.domCode = map_12_domCode;
+        map_12_options.dom.chartNote = map_12_chartNote;
+        map_12_options.dom.domGraphic = map_12_domGraphic;
+        map_12_options.dom.domMain = map_12_domMain;
+        map_12_options.dom.iconResize = map_12_iconResize;
+        map_12_options.dom.codeEditor = map_12_codeEditor;
+        map_12_options.dom.themeSelect = map_12_themSelect;
+        map_12_options.dom.refreshChart = map_12_refrechart;
+        $("body").chartEditor10(map_12_options);
+    });
+</script>
+</body>
+</html>

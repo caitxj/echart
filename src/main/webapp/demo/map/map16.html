@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>地图</title>
+    <link href="../../css/codemirror.css" rel="stylesheet">
+    <link href="../../css/monokai.css" rel="stylesheet">
+    <link href="../../css/chart.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/esl.js"></script>
+    <script type="text/javascript" src="../../js/codemirror.js"></script>
+    <script type="text/javascript" src="../../js/javascript.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths:{
+                echarts:'../../js/echarts',
+                'echarts/chart/bar' : '../../js/echarts',
+                'echarts/chart/line': '../../js/echarts',
+                'echarts/chart/pie': '../../js/echarts',
+                'echarts/chart/map': '../../js/echarts-map',
+                'theme':'../../js/theme'
+            }
+        });
+    </script>
+</head>
+<body>
+<div id="chartNote_map_16" class="container-fluid chartNoteheader">
+    <div class="row-fluid">
+        <div class="page-header hheader" contenteditable="true">
+            <span class="htitle">地图扩展<small>SVG扩展-人体组成</small></span>
+        </div>
+    </div>
+</div>
+<div id="char_main_map_16" class="container-fluid">
+    <div class="row-fluid">
+        <div id="sidebar-code_map_16" class="span4" style="display: none;">
+            <div class="well sidebar-nav" style="height: 520px;">
+                <div class="nav-header"><a href="#" style="float: right;"  class="icon-resize-full"  id ="icon-resize_map_16" ></a>option</div>
+                <textarea id="code_map_16" name="code">
+                    // 自定义扩展图表类型：mapType = body
+                    require('echarts/util/mapData/params').params.bodyMale = {
+                    getGeoJson: function (callback) {
+                    $.ajax({
+                    url: "svg/body-male.svg",
+                    dataType: 'xml',
+                    success: function(xml) {
+                    callback(xml)
+                    }
+                    });
+                    }
+                    }
+                    require('echarts/util/mapData/params').params.bodyFemale = {
+                    getGeoJson: function (callback) {
+                    $.ajax({
+                    url: "svg/body-female.svg",
+                    dataType: 'xml',
+                    success: function(xml) {
+                    callback(xml)
+                    }
+                    });
+                    }
+                    }
+                    option = {
+                    title : {
+                    text : '人体密码',
+                    subtext: '地图SVG扩展',
+                    x:'center'
+                    },
+                    tooltip : {
+                    trigger: 'item'
+                    },
+                    toolbox: {
+                    show : true,
+                    orient : 'vertical',
+                    x: 'right',
+                    y: 'center',
+                    feature : {
+                    mark : {show: true},
+                    dataView : {show: true, readOnly: false},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                    }
+                    },
+                    dataRange: {
+                    min: 0,
+                    max: 100,
+                    x: 'center',
+                    y: 'center',
+                    tdext:['High','Low'],
+                    calculable : true,
+                    itemHeight:30,
+                    color: ['orangered','yellow','lightskyblue']
+                    },
+                    series : [
+                    {
+                    name: '人体密码-男',
+                    type: 'map',
+                    mapType: 'bodyMale', // 自定义扩展图表类型
+                    mapLocation: {
+                    x:'left'
+                    },
+                    roam:true,
+                    itemStyle:{
+                    normal:{label:{show:true}},
+                    emphasis:{label:{show:true}}
+                    },
+                    data:[
+                    {name: '头部', value: 90},
+                    {name: '颈部', value: 80},
+                    {name: '胸部', value: 60},
+                    {name: '腹部', value: 60},
+                    {name: '生殖', value: 50},
+                    {name: '上肢', value: 40},
+                    {name: '下肢', value: 30}
+                    ],
+                    textFixed : {
+                    '上肢' : [-60, 0]
+                    },
+                    markPoint : {
+                    symbol:'emptyCircle',
+                    symbolSize : 10,
+                    effect : {
+                    show: true
+                    },
+                    data : [
+                    {name: '心脏', value: 100, geoCoord:[138, 126]}
+                    ]
+                    },
+                    markLine : {
+                    smooth:true,
+                    effect : {
+                    show: true,
+                    scaleSize: 1,
+                    period: 30,
+                    color: '#fff',
+                    shadowBlur: 5
+                    },
+                    itemStyle : {
+                    normal: {
+                    borderWidth:1,
+                    lineStyle: {
+                    type: 'solid'
+                    }
+                    }
+                    },
+                    data : [
+                    [
+                    {name:'男',geoCoord:[138, 126]},
+                    {name:'女',value:90,geoCoord:[268, 56]}
+                    ]
+                    ]
+                    }
+                    },
+                    {
+                    name: '人体密码-女',
+                    type: 'map',
+                    mapType: 'bodyFemale', // 自定义扩展图表类型
+                    mapLocation: {
+                    x:'right'
+                    },
+                    roam:true,
+                    itemStyle:{
+                    normal:{label:{show:true}},
+                    emphasis:{label:{show:true}}
+                    },
+                    data:[
+                    {name: '头部', value: 90},
+                    {name: '颈部', value: 80},
+                    {name: '胸部', value: 70},
+                    {name: '腹部', value: 60},
+                    {name: '生殖', value: 50},
+                    {name: '上肢', value: 40},
+                    {name: '下肢', value: 30}
+                    ],
+                    markPoint : {
+                    symbol:'emptyCircle',
+                    symbolSize : 10,
+                    effect : {
+                    show: true
+                    },
+                    data : [
+                    {name: '心脏', value: 100, geoCoord:[118, 126]}
+                    ]
+                    },
+                    markLine : {
+                    smooth:true,
+                    effect : {
+                    show: true,
+                    scaleSize: 1,
+                    period: 30,
+                    color: '#fff',
+                    shadowBlur: 5
+                    },
+                    itemStyle : {
+                    normal: {
+                    borderWidth:1,
+                    lineStyle: {
+                    type: 'solid'
+                    }
+                    }
+                    },
+                    data : [
+                    [
+                    {name:'女',geoCoord:[118, 126]},
+                    {name:'男',value:90,geoCoord:[-22, 56]}
+                    ]
+                    ]
+                    }
+                    }
+                    ]
+                    };
+                </textarea>
+            </div>
+        </div>
+        <!--chart-->
+        <div class="span11" id="graphic_map_16">
+            <div id="chartArea_map_16" class="chartArea">
+            </div>
+            <div style="margin-top: 10px;">
+                <button id="refreshChart_map_16" class="btn btn-success btnInfo">刷新</button><button id="editCoder_map_16" class="btn btn-success btnInfo">代码编辑</button><span class="text-info themeSpan">切换主题</span><select id="theme-select_map_16" class="themeSelector"></select>
+                <span id="wrong-message" style="color:red"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../js/chartEditor10.js"></script>
+<script type="text/javascript">
+    $(function() {
+        //dom
+        var map_16_code = document.getElementById('code_map_16');
+        var map_16_chartArea = document.getElementById("chartArea_map_16");
+        var map_16_chartNote = document.getElementById('chartNote_map_16');
+        var map_16_domCode = document.getElementById('sidebar-code_map_16');
+        var map_16_domGraphic = document.getElementById('graphic_map_16');
+        var map_16_domMain = document.getElementById('chartArea_map_16');
+        var map_16_iconResize = document.getElementById('icon-resize_map_16');
+        var map_16_codeEditor = document.getElementById('editCoder_map_16');
+        var map_16_themSelect = document.getElementById('theme-select_map_16');
+        var map_16_refrechart = document.getElementById('refreshChart_map_16');
+        //options
+        var map_16_options = {dom: {}};
+        map_16_options.dom.chartArea = map_16_chartArea;
+        map_16_options.dom.code = map_16_code;
+        map_16_options.dom.domCode = map_16_domCode;
+        map_16_options.dom.chartNote = map_16_chartNote;
+        map_16_options.dom.domGraphic = map_16_domGraphic;
+        map_16_options.dom.domMain = map_16_domMain;
+        map_16_options.dom.iconResize = map_16_iconResize;
+        map_16_options.dom.codeEditor = map_16_codeEditor;
+        map_16_options.dom.themeSelect = map_16_themSelect;
+        map_16_options.dom.refreshChart = map_16_refrechart;
+        $("body").chartEditor10(map_16_options);
+    });
+</script>
+</body>
+</html>

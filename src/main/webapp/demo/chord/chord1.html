@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>和弦图</title>
+    <link href="../../css/codemirror.css" rel="stylesheet">
+    <link href="../../css/monokai.css" rel="stylesheet">
+    <link href="../../css/chart.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/esl.js"></script>
+    <script type="text/javascript" src="../../js/codemirror.js"></script>
+    <script type="text/javascript" src="../../js/javascript.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths:{
+                echarts:'../../js/echarts',
+                'echarts/chart/bar' : '../../js/echarts',
+                'echarts/chart/line': '../../js/echarts',
+                'echarts/chart/pie': '../../js/echarts',
+                'echarts/chart/chord': '../../js/echarts',
+                'theme':'../../js/theme'
+            }
+        });
+    </script>
+</head>
+<body>
+<div id="chartNote_chord_1" class="container-fluid chartNoteheader">
+    <div class="row-fluid">
+        <div class="page-header hheader" contenteditable="true">
+            <span class="htitle">标准和弦图<small>数据格式,排序</small></span>
+        </div>
+    </div>
+</div>
+<div id="char_main_chord_1" class="container-fluid">
+    <div class="row-fluid">
+        <div id="sidebar-code_chord_1" class="span4" style="display: none;">
+            <div class="well sidebar-nav" style="height: 520px;">
+                <div class="nav-header"><a href="#" style="float: right;"  class="icon-resize-full"  id ="icon-resize_chord_1" ></a>option</div>
+                <textarea id="code_chord_1" name="code">
+                    option = {
+                    title : {
+                    text: '测试数据',
+                    subtext: 'From d3.js',
+                    x:'right',
+                    y:'bottom'
+                    },
+                    tooltip : {
+                    trigger: 'item'
+                    },
+                    toolbox: {
+                    show : true,
+                    feature : {
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                    }
+                    },
+                    legend: {
+                    x: 'left',
+                    data:['group1','group2', 'group3', 'group4']
+                    },
+                    series : [
+                    {
+                    type:'chord',
+                    sort : 'ascending',
+                    sortSub : 'descending',
+                    showScale : true,
+                    showScaleText : true,
+                    data : [
+                    {name : 'group1'},
+                    {name : 'group2'},
+                    {name : 'group3'},
+                    {name : 'group4'}
+                    ],
+                    itemStyle : {
+                    normal : {
+                    label : {
+                    show : false
+                    }
+                    }
+                    },
+                    matrix : [
+                    [11975,  5871, 8916, 2868],
+                    [ 1951, 10048, 2060, 6171],
+                    [ 8010, 16145, 8090, 8045],
+                    [ 1013,   990,  940, 6907]
+                    ]
+                    }
+                    ]
+                    };
+                </textarea>
+            </div>
+        </div>
+        <!--chart-->
+        <div class="span11" id="graphic_chord_1">
+            <div id="chartArea_chord_1" class="chartArea">
+            </div>
+            <div style="margin-top: 10px;">
+                <button id="refreshChart_chord_1" class="btn btn-success btnInfo">刷新</button><button id="editCoder_chord_1" class="btn btn-success btnInfo">代码编辑</button><span class="text-info themeSpan">切换主题</span><select id="theme-select_chord_1" class="themeSelector"></select>
+                <span id="wrong-message" style="color:red"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../../js/chartEditor10.js"></script>
+<script type="text/javascript">
+    $(function(){
+        //dom
+        var chord_1_code=document.getElementById('code_chord_1');
+        var chord_1_chartArea=document.getElementById("chartArea_chord_1");
+        var chord_1_chartNote=document.getElementById('chartNote_chord_1');
+        var chord_1_domCode = document.getElementById('sidebar-code_chord_1');
+        var chord_1_domGraphic = document.getElementById('graphic_chord_1');
+        var chord_1_domMain = document.getElementById('chartArea_chord_1');
+        var chord_1_iconResize = document.getElementById('icon-resize_chord_1');
+        var chord_1_codeEditor=document.getElementById('editCoder_chord_1');
+        var chord_1_themSelect=document.getElementById('theme-select_chord_1');
+        var chord_1_refrechart=document.getElementById('refreshChart_chord_1');
+        //options
+        var chord_1_options={dom:{}};
+        chord_1_options.dom.chartArea=chord_1_chartArea;
+        chord_1_options.dom.code=chord_1_code;
+        chord_1_options.dom.domCode=chord_1_domCode;
+        chord_1_options.dom.chartNote=chord_1_chartNote;
+        chord_1_options.dom.domGraphic=chord_1_domGraphic;
+        chord_1_options.dom.domMain=chord_1_domMain;
+        chord_1_options.dom.iconResize=chord_1_iconResize;
+        chord_1_options.dom.codeEditor=chord_1_codeEditor;
+        chord_1_options.dom.themeSelect=chord_1_themSelect;
+        chord_1_options.dom.refreshChart=chord_1_refrechart;
+        $("body").chartEditor10(chord_1_options);
+    });
+</script>
+</body>
+</html>

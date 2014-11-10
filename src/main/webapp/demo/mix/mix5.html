@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <title>混搭</title>
+    <link href="../../css/codemirror.css" rel="stylesheet">
+    <link href="../../css/monokai.css" rel="stylesheet">
+    <link href="../../css/chart.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../js/esl.js"></script>
+    <script type="text/javascript" src="../../js/codemirror.js"></script>
+    <script type="text/javascript" src="../../js/javascript.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths:{
+                echarts:'../../js/echarts',
+                'echarts/chart/bar' : '../../js/echarts',
+                'echarts/chart/line': '../../js/echarts',
+                'echarts/chart/pie': '../../js/echarts',
+                'echarts/chart/scatter': '../../js/echarts',
+                'echarts/chart/map': '../../js/echarts-map',
+                'theme':'../../js/theme'
+            }
+        });
+    </script>
+</head>
+<body>
+<div id="chartNote_mix_5" class="container-fluid chartNoteheader">
+    <div class="row-fluid">
+        <div class="page-header hheader" contenteditable="true">
+            <span class="htitle">散饼图<small>用饼图代替气泡图中的散点,多系列</small></span>
+        </div>
+    </div>
+</div>
+<div id="char_main_mix_5" class="container-fluid">
+<div class="row-fluid">
+    <div id="sidebar-code_mix_5" class="span4" style="display: none;">
+        <div class="well sidebar-nav" style="height: 520px;">
+            <div class="nav-header"><a href="#" style="float: right;"  class="icon-resize-full"  id ="icon-resize_mix_5" ></a>option</div>
+            <textarea id="code_mix_5" name="code">
+                // 虚拟构造同横纵坐标的两组数据
+                var sData1 = (function () {
+                var d = [];
+                var len = 40;
+                var value;
+                while (len--) {
+                d.push([
+                Math.round(Math.random()*10) * (Math.round(Math.random()*10) > 5 ? 1 : -1),
+                Math.round(Math.random()*10) * (Math.round(Math.random()*10) > 5 ? 1 : -1),
+                Math.round(Math.random()*20)
+                ]);
+                }
+                return d;
+                })();
+                var sData2 = (function () {
+                var d = [];
+                var len = sData1.length;
+                for (var i = 0; i < len; i++) {
+                d.push([
+                sData1[i][0],
+                sData1[i][1],
+                Math.round(Math.random()*15)
+                ]);
+                }
+                return d;
+                })();
+
+                option = {
+                color : ['rgba(255, 69, 0, 0.5)', 'rgba(30, 144, 255, 0.5)'],
+                title : {
+                text: '饼图代替散点',
+                subtext : '混搭'
+                },
+                tooltip : {
+                trigger: 'item',
+                formatter: "{b} : {c} ({d}%)"
+                },
+                toolbox: {
+                show : true,
+                feature : {
+                mark : {show: true},
+                dataView : {show: true, readOnly: false},
+                restore : {show: true},
+                saveAsImage : {show: true}
+                }
+                },
+                xAxis : [
+                {
+                type : 'value',
+                splitNumber: 2
+                }
+                ],
+                yAxis : [
+                {
+                type : 'value',
+                splitNumber: 2
+                }
+                ],
+                animation: false,
+                series : [
+                {
+                type:'scatter',
+                symbol: 'none',
+                data: sData1
+                },
+                {
+                type:'scatter',
+                symbol: 'none',
+                data: sData2
+                }
+                ]
+                };
+
+                function buildPieSeries(){
+                var xAxis = myChart.component.xAxis.getAxis(0);
+                var yAxis = myChart.component.yAxis.getAxis(0);
+                var len = sData1.length;
+                option.series = option.series.slice(0,2);
+                option.legend = {
+                data : ['系列1', '系列2']
+                };
+                while (len--) {
+                option.series.push({
+                type: 'pie',
+                itemStyle : {
+                normal : {
+                label : {
+                show : false
+                },
+                labelLine : {
+                show : false
+                }
+                }
+                },
+                radius : sData1[len][2] + sData2[len][2],
+                center: [
+                xAxis.getCoord(sData1[len][0]),
+                yAxis.getCoord(sData1[len][1])
+                ],
+                data: [
+                {name: '系列1', value: sData1[len][2]},
+                {name: '系列2', value: sData2[len][2]}
+                ]
+                })
+                }
+                option.animation = true;
+                myChart.setOption(option, true);
+                window.onresize = buildPieSeries;
+                }
+                // 构造出一系列的饼图代替原来的散点，需要在散点画出来后才能获取到散点的坐标，setTimeout！
+                setTimeout(buildPieSeries, 100);
+            </textarea>
+        </div>
+    </div>
+    <!--chart-->
+    <div class="span11" id="graphic_mix_5">
+        <div id="chartArea_mix_5" class="chartArea">
+        </div>
+        <div style="margin-top: 10px;">
+            <button id="refreshChart_mix_5" class="btn btn-success btnInfo">刷新</button><button id="editCoder_mix_5" class="btn btn-success btnInfo">代码编辑</button><span class="text-info themeSpan">切换主题</span><select id="theme-select_mix_5" class="themeSelector"></select>
+            <span id="wrong-message" style="color:red"></span>
+        </div>
+    </div>
+</div>
+</div>
+<script type="text/javascript" src="../../js/chartEditor10.js"></script>
+<script type="text/javascript">
+    $(function(){
+        //dom
+        var mix_5_code=document.getElementById('code_mix_5');
+        var mix_5_chartArea=document.getElementById("chartArea_mix_5");
+        var mix_5_chartNote=document.getElementById('chartNote_mix_5');
+        var mix_5_domCode = document.getElementById('sidebar-code_mix_5');
+        var mix_5_domGraphic = document.getElementById('graphic_mix_5');
+        var mix_5_domMain = document.getElementById('chartArea_mix_5');
+        var mix_5_iconResize = document.getElementById('icon-resize_mix_5');
+        var mix_5_codeEditor=document.getElementById('editCoder_mix_5');
+        var mix_5_themSelect=document.getElementById('theme-select_mix_5');
+        var mix_5_refrechart=document.getElementById('refreshChart_mix_5');
+        //options
+        var mix_5_options={dom:{}};
+        mix_5_options.dom.chartArea=mix_5_chartArea;
+        mix_5_options.dom.code=mix_5_code;
+        mix_5_options.dom.domCode=mix_5_domCode;
+        mix_5_options.dom.chartNote=mix_5_chartNote;
+        mix_5_options.dom.domGraphic=mix_5_domGraphic;
+        mix_5_options.dom.domMain=mix_5_domMain;
+        mix_5_options.dom.iconResize=mix_5_iconResize;
+        mix_5_options.dom.codeEditor=mix_5_codeEditor;
+        mix_5_options.dom.themeSelect=mix_5_themSelect;
+        mix_5_options.dom.refreshChart=mix_5_refrechart;
+        $("body").chartEditor10(mix_5_options);
+    });
+</script>
+</body>
+</html>
